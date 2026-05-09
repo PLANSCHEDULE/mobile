@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -27,6 +28,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun LoginScreen() {
     var isEmailLoginVisible by remember { mutableStateOf(false) }
+    var email by remember { mutableStateOf("") }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -55,7 +57,19 @@ fun LoginScreen() {
                     Text("이메일로 로그인하기")
                 }
             } else {
-                // 이메일로 로그인 버튼을 누르면 나오는 기능 구현 필요
+                // 이메일 입력 칸
+                // 버튼을 누르면 로그인 버튼이 안없어 지고 아래에 입력칸이 생기는게 더 좋을 것 같은데
+                // 방법 찾아보기
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = {email = it},
+                    label = {Text("이메일")},
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // 비밀번호 입력 칸
+
+                // 로그인 버튼
 
             }
         }
