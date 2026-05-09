@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -60,6 +61,12 @@ fun LoginScreen() {
                     Text("이메일로 로그인하기")
                 }
             } else {
+                Text(
+                    text = "이메일로 로그인",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 24.dp)
+                )
                 // 이메일 입력 칸
                 // 버튼을 누르면 로그인 버튼이 안없어 지고 아래에 입력칸이 생기는게 더 좋을 것 같은데
                 // 방법 찾아보기
