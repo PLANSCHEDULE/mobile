@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,7 +81,23 @@ fun LoginScreen() {
                     modifier = Modifier.fillMaxWidth()
                 )
 
+                Spacer(modifier = Modifier.height(24.dp))
+
                 // 로그인 버튼
+                Button(
+                    onClick = {},
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("로그인")
+                }
+
+                // 만약 잘못 눌렀을 경우 돌아가는 버튼도 필요할 듯!
+                Button(
+                    onClick = {isEmailLoginVisible = false},
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("취소")
+                }
 
             }
         }
