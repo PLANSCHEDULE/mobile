@@ -36,6 +36,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun SignUpScreen() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var nickname by remember { mutableStateOf("") }
     // 상단바, Scaffold
     Scaffold(
         // 화면 상단바를 만들기 위해서 Scaffold의 Topbar 사용
@@ -90,6 +91,17 @@ fun SignUpScreen() {
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 닉네임 입력창
+            OutlinedTextField(
+                value = nickname,
+                onValueChange = {nickname = it},
+                label = {Text("닉네임")},
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
             )
 
         }
