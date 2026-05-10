@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.home.screen
+package com.example.thirdpj.ui.home.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
