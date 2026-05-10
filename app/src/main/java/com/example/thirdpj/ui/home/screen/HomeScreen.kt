@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.thirdpj.ui.components.BottomBar
 import com.example.thirdpj.ui.home.components.HomeHeader
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
@@ -16,6 +17,11 @@ fun HomeScreen() {
         topBar = {
             HomeHeader()
         },
+
+        bottomBar = {
+            BottomBar()
+        },
+
         containerColor = Color.White
     ) {innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
