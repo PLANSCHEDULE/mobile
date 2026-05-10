@@ -1,8 +1,10 @@
 package com.example.thirdpj.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -45,6 +47,13 @@ fun BottomBar() {
             onClick = {},
             icon = {Icon(Icons.Default.Favorite, contentDescription = null)},
             label = {Text("찜")}
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {Icon(Icons.Default.Person, contentDescription = null)},
+            label = {Text("마이")}
         )
 
 
