@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -93,7 +96,52 @@ fun TemplateCard() {
                 .defaultMinSize(minHeight = 180.dp)
 
         ) {
+            // 제목
+            Text(
+                text = "일본 당일치기 도쿄",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
 
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 사용자 정보
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Surface(
+                    modifier = Modifier.size(20.dp),
+                    shape = CircleShape,
+                    color = Color(0xFFB39DDB)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+
+                        Text(
+                            text = "길동",
+                            color = Color.White,
+                            fontSize = 8.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "@gildong",
+                    color = Color.Gray,
+                    fontSize = 12.sp
+                )
+            }
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(vertical = 12.dp),
+                thickness = 0.5.dp
+            )
+            
+            // 일정 내용 구현 자리 필요!
         }
 
         // 통계 영역 (통계 영역을 나중에 구현하는게 좋으려나. 한 번 생각해 보기)
