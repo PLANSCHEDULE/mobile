@@ -1,8 +1,8 @@
 package com.example.thirdpj.ui.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -11,13 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
 fun BottomBar() {
 
     NavigationBar(
-        containerColor = Color.White
+        containerColor = Color.White,
+        tonalElevation = 8.dp
     ) {
         // 홈
         NavigationBarItem(
@@ -36,6 +38,16 @@ fun BottomBar() {
             icon = {Icon(Icons.Default.Search, contentDescription = null)},
             label = {Text("탐색")}
         )
+
+        // 찜
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {Icon(Icons.Default.Favorite, contentDescription = null)},
+            label = {Text("찜")}
+        )
+
+
 
     }
 }
