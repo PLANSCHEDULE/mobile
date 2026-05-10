@@ -1,9 +1,11 @@
 package com.example.thirdpj.ui.home.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -23,7 +25,11 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun HomeHeader() {
     // 파일 구조를 어떻게 잡아야되지
-    Column() {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+            .background(Color(0xFFFFF3E0))
+            .padding(top = 16.dp, start = 20.dp, end = 8.dp, bottom = 12.dp)
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -48,6 +54,16 @@ fun HomeHeader() {
                 )
             }
         }
+        // 간단한 문구
+        // 단순히 텍스트만 추가하면 검색 아이콘 옆에 생성되어 버림.
+        // 아 세로로 쌓여야 되는 거니까 Row 안이 아니라 Column쪽에 있어야 됨
+        // 꼭 위치 확인 잘 하기!
+        Text(
+            text = "오늘도 갓생 따라하기 🔥",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color.Gray,
+            modifier = Modifier.padding(top = 2.dp)
+        )
     }
 
 }
