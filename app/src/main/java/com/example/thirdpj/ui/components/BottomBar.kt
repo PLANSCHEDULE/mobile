@@ -2,6 +2,8 @@ package com.example.thirdpj.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -14,19 +16,25 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun BottomBar() {
 
-    // 임시 변수 (ui 용)
-    val selectedTab = "HOME"
-
-
     NavigationBar(
         containerColor = Color.White
     ) {
         // 홈
         NavigationBarItem(
-            selected = selectedTab == "HOME",
+            // 우선 ui 틀 잡는 단계에서는 bolean으로 두는게 좋은 거 같다
+            selected = true,
             onClick = {},
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("HOME") }
+        )
+
+        // 탐색
+        // 음 탐색 기능 대신 전체적인 템플릿을 볼 수 있는 메뉴여도 괜찮을 듯
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {Icon(Icons.Default.Search, contentDescription = null)},
+            label = {Text("탐색")}
         )
 
     }
