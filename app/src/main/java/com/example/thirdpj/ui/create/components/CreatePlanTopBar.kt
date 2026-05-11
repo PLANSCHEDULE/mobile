@@ -34,7 +34,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun CreatePlanTopBar() {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFFFFFBF5)
+            containerColor = Color.White
         ),
         // 뒤로 가기 버튼
         navigationIcon = {
