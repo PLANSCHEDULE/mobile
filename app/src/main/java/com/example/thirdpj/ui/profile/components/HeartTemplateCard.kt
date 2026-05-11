@@ -97,6 +97,14 @@ fun HeartTemplateCard(
                     color = Color.Gray
                 )
             }
+
+            // 화살표 아이콘
+            Icon(
+                painter = painterResource(id = R.drawable.chevron_right_icon),
+                contentDescription = null,
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+            )
         }
     }
 }
