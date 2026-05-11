@@ -35,10 +35,9 @@ import com.example.thirdpj.R
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun TemplateCard() {
+fun TemplateCard(modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .padding(4.dp),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
