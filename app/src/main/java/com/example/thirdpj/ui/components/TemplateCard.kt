@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -40,7 +39,7 @@ fun TemplateCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(4.dp),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
 
@@ -50,14 +49,14 @@ fun TemplateCard() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(140.dp)
+                .height(120.dp)
                 .background(Color(0xFFFFB380))
-                .padding(12.dp)
+                .padding(10.dp)
         ) {
             // 다운로드 버튼
             Surface(
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(28.dp)
                     .align(Alignment.TopStart),
                 shape = CircleShape
             ) {
@@ -73,7 +72,7 @@ fun TemplateCard() {
             // 찜 버튼
             Surface(
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(28.dp)
                     .align(Alignment.TopEnd),
                 shape = CircleShape,
                 color = Color.White.copy(alpha = 0.8f)
@@ -92,26 +91,26 @@ fun TemplateCard() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .defaultMinSize(minHeight = 180.dp)
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .defaultMinSize(minHeight = 140.dp)
 
         ) {
             // 제목
             Text(
                 text = "일본 당일치기 도쿄",
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
+                fontSize = 12.sp
 
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             // 사용자 정보
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(18.dp),
                     shape = CircleShape,
                     color = Color(0xFFB39DDB)
                 ) {
@@ -120,24 +119,24 @@ fun TemplateCard() {
                         Text(
                             text = "길동",
                             color = Color.White,
-                            fontSize = 8.sp,
+                            fontSize = 6.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
                     text = "@gildong",
                     color = Color.Gray,
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
             }
 
             HorizontalDivider(
                 modifier = Modifier
-                    .padding(vertical = 12.dp),
+                    .padding(vertical = 10.dp),
                 thickness = 0.5.dp
             )
             
@@ -149,14 +148,14 @@ fun TemplateCard() {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFFAFAFA))
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 Icons.Default.FavoriteBorder,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(14.dp),
+                    .size(12.dp),
                 tint = Color.LightGray
             )
             // DB연결 시
