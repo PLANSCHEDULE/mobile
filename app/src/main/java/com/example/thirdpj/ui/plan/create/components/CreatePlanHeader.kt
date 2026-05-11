@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.create.components
+package com.example.thirdpj.ui.plan.create.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
