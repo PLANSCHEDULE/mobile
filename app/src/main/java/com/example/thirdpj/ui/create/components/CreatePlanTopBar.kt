@@ -73,7 +73,8 @@ fun CreatePlanTopBar() {
                 shape = RoundedCornerShape(12.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
             ) {
-                Icon(Icons.Default.Share,
+                Icon(
+                    painter = painterResource(id = R.drawable.share_icon),
                     contentDescription = null,
                     modifier = Modifier.size(16.dp)
                     )
