@@ -1,6 +1,5 @@
 package com.example.thirdpj.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
