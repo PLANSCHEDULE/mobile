@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -18,7 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +38,7 @@ fun PlanTimeBottomSheet(
     // 시간 선택
     val timePickerState = rememberTimePickerState(is24Hour = true)
 
-    // android에서 ModalBottomSheet를 통해 bottomsheet 구현 가능
+    // android에서 ModalBottomSheet를 통해 bottom sheet 구현 가능
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         // 열림/닫힘
@@ -64,6 +70,24 @@ fun PlanTimeBottomSheet(
                     periodSelectorSelectedContentColor = Color(0xFFFFF7F0)
                 )
             )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // 확인 버튼 추가
+            Button(
+                onClick = {
+                    //warning 해결: Locale.US를 사용하면 어떤 국가는 무조건 숫자로 사용 가능하게 명시
+                    val formattedTime = String.format(Locale.US,"%02d:%02d", timePickerState.hour, timePickerState.minute)
+                    onConfirm(formattedTime)
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .height(54.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF27A54))
+            ) {
+                Text("시간 적용하기", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            }
 
         }
     }

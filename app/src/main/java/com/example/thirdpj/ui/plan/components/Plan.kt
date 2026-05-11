@@ -29,7 +29,7 @@ fun Plan(item: PlanItem,
          onTimeClick: () -> Unit
 ) {
     Surface(
-        modifier = Modifier.Companion
+        modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         color = Color.White,
@@ -37,16 +37,16 @@ fun Plan(item: PlanItem,
         shadowElevation = 2.dp
     ) {
         Row(
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.Companion.CenterVertically
+            verticalAlignment = Alignment.CenterVertically
         ) {
             // 드래그 아이콘 표시
             Icon(
                 painter = painterResource(id = R.drawable.drag_indicator_icon),
                 contentDescription = null,
-                tint = Color.Companion.Gray,
+                tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
             )
 
