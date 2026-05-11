@@ -106,6 +106,9 @@ fun ProfileHeaderScreen() {
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // 통계 부분 db 연결 후에 구현하는게 좋을 것 같음
+
+
 
             }
         }
