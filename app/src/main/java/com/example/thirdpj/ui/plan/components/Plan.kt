@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,7 +29,8 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun Plan(item: PlanItem,
          onCheckedChange: (Boolean) -> Unit,
-         onTimeClick: () -> Unit
+         onTimeClick: () -> Unit,
+         onDeleteClick: () -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -55,7 +59,7 @@ fun Plan(item: PlanItem,
             // 시간
             Surface(
                 onClick = onTimeClick,
-                color = Color.Transparent,
+                color = Color(0xFFFFF7F0),
                 shape = RoundedCornerShape(4.dp)
             ) {
                 // 시간 선택을 어떻게 하면 좋을까, 선택? 시간 선택 컴포넌트를 따로 만들어야 하는 듯
@@ -66,6 +70,38 @@ fun Plan(item: PlanItem,
                         color = if(item.isDone) Color.LightGray else Color(0xFFF27A54)
                     ),
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // 체크박스
+            Checkbox(
+                checked = item.isDone,
+                onCheckedChange = onCheckedChange,
+                colors = CheckboxDefaults.colors(checkedColor = Color(0xFFF27A54))
+            )
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(
+                text = item.title,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = if(item.isDone) Color.LightGray else Color.Black
+                ),
+                modifier = Modifier.weight(1f)
+            )
+
+            // 삭제 버튼
+            IconButton(
+                onClick = onDeleteClick
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.delete_icon),
+                    contentDescription = "삭제",
+                    tint = Color.Gray
+
                 )
             }
         }
@@ -83,13 +119,13 @@ fun PlanPreview(
             id = 1,
             time = "12:00",
             title = "점심 먹기",
-            emoji = "🐷",
             isDone = false
         )
         Plan(
             item = dummyData,
             onCheckedChange = {},
-            onTimeClick = {}
+            onTimeClick = {},
+            onDeleteClick = {}
         )
     }
 }
