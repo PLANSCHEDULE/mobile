@@ -7,8 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +41,12 @@ fun CreatePlanHeader(
 
     var title by remember { mutableStateOf("") }
 
+    val today = remember {
+        // java.time 대신 java.util.Date
+        // 지금 최소 버전은 24로 해놓았기 때문에 26이상에서 사용가능한 java.time보단 java.util.time을 사용
+        val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+        formatter.format(Date())
+    }
 
     Column(
         modifier = Modifier
@@ -78,13 +92,28 @@ fun CreatePlanHeader(
             }
         )
 
-
-
-
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 작성 날짜
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .background(Color(0xFFF8F0E5), RoundedCornerShape(8.dp))
+                .padding(horizontal = 12.dp, vertical = 4.dp)
 
-
+        ) {
+            Icon(
+                imageVector = Icons.Default.DateRange,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+                tint = Color(0xFFF27A54)
+            )
+            Text(
+                text = "$today",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Black
+            )
+        }
 
     }
 
