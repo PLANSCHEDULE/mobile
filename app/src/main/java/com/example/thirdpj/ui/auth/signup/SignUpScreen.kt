@@ -100,7 +100,7 @@ fun SignUpScreen() {
             OutlinedTextField(
                 value = nickname,
                 onValueChange = {nickname = it},
-                label = {Text("닉네임")},
+                label = {Text("이름")},
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
             )
