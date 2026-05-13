@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -23,8 +24,9 @@ fun ProfileForm(
     onHandleChange: (String) -> Unit,
     isHandleEditable: Boolean = true,
     nickname: String,
-    onNicknameChange: (String) -> Unit
-
+    onNicknameChange: (String) -> Unit,
+    bio: String,
+    onBioChange: (String) -> Unit
 ) {
     Column(
     ) {
@@ -67,6 +69,34 @@ fun ProfileForm(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             shape = MaterialTheme.shapes.medium
         )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "자기소개",
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = bio,
+            onValueChange = onBioChange,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 120.dp),
+            placeholder = {Text("자신을 소개해 주세요(선택사항)")},
+            supportingText = {
+                Text(
+                    text = "${bio.length}/150",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End
+                )
+            },
+
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            shape = MaterialTheme.shapes.medium
+        )
     }
 
 }
@@ -79,7 +109,9 @@ fun ProfileFormPreview() {
             handle = "preview_id",
             onHandleChange = {},
             nickname = "홍길동",
-            onNicknameChange = {}
+            onNicknameChange = {},
+            bio = "안녕하세요! 반갑습니다.",
+            onBioChange = {}
         )
     }
 }
