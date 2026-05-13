@@ -32,7 +32,8 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(onNavigateToSignUp: () -> Unit) {
+fun LoginScreen(onNavigateToSignUp: () -> Unit,
+                onLoginSuccess: () -> Unit) {
     var isEmailLoginVisible by remember { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -122,7 +123,9 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit) {
 
                 // 로그인 버튼
                 Button(
-                    onClick = {},
+                    onClick = {
+                        onLoginSuccess()
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("로그인")

@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
+import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
@@ -35,7 +36,12 @@ class MainActivity : ComponentActivity() {
                     // 로그인 화면 등록
                     composable("login") {
                         LoginScreen(
-                            onNavigateToSignUp = {navController.navigate("signup")}
+                            onNavigateToSignUp = {navController.navigate("signup")},
+                            onLoginSuccess = {
+                                navController.navigate("home") {
+                                    popUpTo("로그인"){ inclusive = true }
+                                }
+                            }
                         )
                     }
                     // 회원가입 화면 등록
@@ -59,13 +65,19 @@ class MainActivity : ComponentActivity() {
                             initialProfile = null,
                             onBackClick = {navController.popBackStack()},
                             onActionClick = {profileData ->
-                                // 저장 성공 후 메인 화면 이동 필요
+                                navController.navigate("home") {
+                                    popUpTo("profile_create") {
+                                        inclusive = true
+                                    }
+                                }
 
                             }
                         )
                     }
 
-
+                    composable("home") {
+                        HomeScreen()
+                    }
                 }
             }
         }
