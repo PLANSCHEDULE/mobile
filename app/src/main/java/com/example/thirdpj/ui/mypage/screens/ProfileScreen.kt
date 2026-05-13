@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.profile.screens
+package com.example.thirdpj.ui.mypage.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,9 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.ui.components.BottomBar
-import com.example.thirdpj.ui.profile.components.HeartTemplateCard
-import com.example.thirdpj.ui.profile.components.MyTemplateSection
-import com.example.thirdpj.ui.profile.components.ProfileHeaderScreen
+import com.example.thirdpj.ui.mypage.components.HeartTemplateCard
+import com.example.thirdpj.ui.mypage.components.MyTemplateSection
+import com.example.thirdpj.ui.mypage.components.ProfileHeaderScreen
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
