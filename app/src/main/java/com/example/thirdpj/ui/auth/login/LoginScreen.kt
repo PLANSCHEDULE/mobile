@@ -138,9 +138,6 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit) {
 
             }
         }
-
-
-
     }
 }
 //
