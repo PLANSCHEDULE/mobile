@@ -36,7 +36,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(onBack: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
@@ -51,7 +51,7 @@ fun SignUpScreen() {
                     Text(text = "회원가입")
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = onBack) {
                         Icon(painter = painterResource(id = R.drawable.arrow_back),
                             contentDescription = "뒤로가기")
                     }
@@ -122,10 +122,10 @@ fun SignUpScreen() {
     }
 }
 
-@Preview
-@Composable
-fun SignUpScreenPreview() {
-    ThirdPJTheme{
-        SignUpScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun SignUpScreenPreview() {
+//    ThirdPJTheme{
+//        SignUpScreen()
+//    }
+//}
