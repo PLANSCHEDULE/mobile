@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
@@ -20,7 +21,9 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun ProfileForm(
     handle: String,
     onHandleChange: (String) -> Unit,
-    isHandleEditable: Boolean = true
+    isHandleEditable: Boolean = true,
+    nickname: String,
+    onNicknameChange: (String) -> Unit
 
 ) {
     Column(
@@ -42,6 +45,28 @@ fun ProfileForm(
             shape = MaterialTheme.shapes.medium
 
         )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text("닉네임", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = nickname,
+            onValueChange = onNicknameChange,
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = {Text("닉네임")},
+            singleLine = true,
+            // supportingText를 활용하면 글자 수를 띄울 수 있음!
+            supportingText = {
+                Text(
+                    text = "${nickname.length}/20",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End
+                )
+            },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            shape = MaterialTheme.shapes.medium
+        )
     }
 
 }
@@ -52,7 +77,9 @@ fun ProfileFormPreview() {
     ThirdPJTheme {
         ProfileForm(
             handle = "preview_id",
-            onHandleChange = {}
+            onHandleChange = {},
+            nickname = "홍길동",
+            onNicknameChange = {}
         )
     }
 }
