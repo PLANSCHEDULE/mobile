@@ -11,6 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.thirdpj.ui.auth.login.LoginScreen
+import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +25,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ThirdPJTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "login"
+                ) {
+                    // 로그인 화면 등록
+                    composable("login") {
+                        LoginScreen(
+                            onNavigateToSignUp = {navController.navigate("signup")}
+                        )
+                    }
+                    // 회원가입 화면 등록
+                    composable("signup") {
+                        SignUpScreen(
+                            onBack = {navController.popBackStack()}
+                        )
+
+                    }
+
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ThirdPJTheme {
-        Greeting("Android")
-    }
-}

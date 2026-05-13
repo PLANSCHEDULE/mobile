@@ -32,7 +32,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onNavigateToSignUp: () -> Unit) {
     var isEmailLoginVisible by remember { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -80,7 +80,7 @@ fun LoginScreen() {
                         color = Color.Gray
                     )
                     TextButton(
-                        onClick = {}
+                        onClick = onNavigateToSignUp
                     ) {
                         Text(
                             text = "회원가입",
@@ -138,16 +138,13 @@ fun LoginScreen() {
 
             }
         }
-
-
-
     }
 }
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    ThirdPJTheme{
-        LoginScreen()
-    }
-}
+//
+//@Preview
+//@Composable
+//fun LoginScreenPreview() {
+//    ThirdPJTheme{
+//        LoginScreen(onNavigateToSignup = {})
+//    }
+//}

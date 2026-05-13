@@ -60,7 +60,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
                 shape = CircleShape
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.download_icon),
+                    painter = painterResource(id = R.drawable.download),
                     contentDescription = null,
                     modifier = Modifier.padding(6.dp),
                     tint = Color.DarkGray
@@ -168,7 +168,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
             )
 
             Icon(
-                painter = painterResource(id = R.drawable.download_icon),
+                painter = painterResource(id = R.drawable.download),
                 contentDescription = null,
                 modifier = Modifier.padding(6.dp),
                 tint = Color.LightGray

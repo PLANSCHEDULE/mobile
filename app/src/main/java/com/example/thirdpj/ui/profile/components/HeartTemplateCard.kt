@@ -60,7 +60,7 @@ fun HeartTemplateCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.bookmark_heart_icon),
+                    painter = painterResource(id = R.drawable.bookmark_heart),
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.size(28.dp)
@@ -100,7 +100,7 @@ fun HeartTemplateCard(
 
             // 화살표 아이콘
             Icon(
-                painter = painterResource(id = R.drawable.chevron_right_icon),
+                painter = painterResource(id = R.drawable.chevron_right),
                 contentDescription = null,
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
