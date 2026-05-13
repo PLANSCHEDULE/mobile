@@ -40,7 +40,7 @@ fun CreatePlanTopBar() {
         navigationIcon = {
             IconButton(onClick = {}) {
                 Icon(
-                    painter = painterResource(id = R.drawable.arrow_back_icon),
+                    painter = painterResource(id = R.drawable.arrow_back),
                     contentDescription = "뒤로가기",
                 )
             }
@@ -72,7 +72,7 @@ fun CreatePlanTopBar() {
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.share_icon),
+                    painter = painterResource(id = R.drawable.share),
                     contentDescription = null,
                     modifier = Modifier.size(16.dp)
                     )

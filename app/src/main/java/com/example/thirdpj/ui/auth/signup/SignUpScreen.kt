@@ -25,11 +25,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.thirdpj.R
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +52,8 @@ fun SignUpScreen() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {}) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "뒤로가기")
+                        Icon(painter = painterResource(id = R.drawable.arrow_back),
+                            contentDescription = "뒤로가기")
                     }
                 },
                 // 상단바 구분이 안가서 우선 색상 아무거나

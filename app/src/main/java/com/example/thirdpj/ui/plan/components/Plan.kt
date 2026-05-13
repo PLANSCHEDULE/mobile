@@ -48,7 +48,7 @@ fun Plan(item: PlanItem,
         ) {
             // 드래그 아이콘 표시
             Icon(
-                painter = painterResource(id = R.drawable.drag_indicator_icon),
+                painter = painterResource(id = R.drawable.drag_indicator),
                 contentDescription = null,
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
@@ -98,7 +98,7 @@ fun Plan(item: PlanItem,
                 onClick = onDeleteClick
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.delete_icon),
+                    painter = painterResource(id = R.drawable.delete),
                     contentDescription = "삭제",
                     tint = Color.Gray
 
