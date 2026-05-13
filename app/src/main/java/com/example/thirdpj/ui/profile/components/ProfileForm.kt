@@ -1,0 +1,58 @@
+package com.example.thirdpj.ui.profile.components
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.thirdpj.ui.theme.ThirdPJTheme
+
+@Composable
+fun ProfileForm(
+    handle: String,
+    onHandleChange: (String) -> Unit,
+    isHandleEditable: Boolean = true
+
+) {
+    Column(
+    ) {
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text("핸들", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = handle,
+            onValueChange = onHandleChange,
+            modifier = Modifier.fillMaxWidth(),
+            enabled = isHandleEditable,
+            placeholder = {Text("unique_id")},
+            prefix = {Text("@")},
+            singleLine = true,
+            // 오 keyboardoptions으로 영문 키보드가 우선으로 보이게 할 수 있는 옵션을 걸 수 있음
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Next),
+            shape = MaterialTheme.shapes.medium
+
+        )
+    }
+
+}
+
+@Preview
+@Composable
+fun ProfileFormPreview() {
+    ThirdPJTheme {
+        ProfileForm(
+            handle = "preview_id",
+            onHandleChange = {}
+        )
+    }
+}
