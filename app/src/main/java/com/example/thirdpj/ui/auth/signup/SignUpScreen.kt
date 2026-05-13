@@ -42,7 +42,8 @@ import retrofit2.Retrofit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(onBack: () -> Unit) {
+fun SignUpScreen(onBack: () -> Unit,
+                 onSignUpSuccess: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
@@ -129,7 +130,7 @@ fun SignUpScreen(onBack: () -> Unit) {
 
                             if(response.isSuccessful) {
                                 withContext(Dispatchers.Main) {
-                                    onBack()
+                                    onSignUpSuccess()
                                 }
                             } else {
                                 Log.e("SignUp","서버 에러: ${response.errorBody()?.string()}")

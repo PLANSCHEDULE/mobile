@@ -22,7 +22,8 @@ fun ProfileTopBar(
     onBackClick: () -> Unit,
     actionText: String,
     onActionClick: () -> Unit,
-    isActionEnabled: Boolean = true
+    isActionEnabled: Boolean = true,
+    showBackButton: Boolean = true
 
 ) {
     TopAppBar(
@@ -34,9 +35,11 @@ fun ProfileTopBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onBackClick) {
-                Icon(painter = painterResource(id = R.drawable.arrow_back),
-                    contentDescription = "뒤로가기")
+            if(showBackButton) {
+                IconButton(onClick = onBackClick) {
+                    Icon(painter = painterResource(id = R.drawable.arrow_back),
+                        contentDescription = "뒤로가기")
+                }
             }
         },
         actions = {

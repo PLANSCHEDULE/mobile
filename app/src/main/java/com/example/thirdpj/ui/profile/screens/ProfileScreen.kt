@@ -1,5 +1,7 @@
 package com.example.thirdpj.ui.profile.screens
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.data.profile.dto.ProfileResponse
@@ -29,6 +32,11 @@ fun ProfileScreen(
 
 ) {
     val isEditMode = initialProfile != null
+    val context = LocalContext.current
+
+    BackHandler(enabled = !isEditMode) {
+        Toast.makeText(context, "원활한 서비스 이용을 위해 프로필 작성이 필요합니다.", Toast.LENGTH_SHORT).show()
+    }
 
     var handle by remember { mutableStateOf(initialProfile?.handle ?: "") }
     var nickname by remember { mutableStateOf(initialProfile?.nickname ?:"") }
@@ -47,7 +55,8 @@ fun ProfileScreen(
                     onActionClick(ProfileResponse(handle, nickname, bio))
 
                 },
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                showBackButton = isEditMode
 
             )
         }

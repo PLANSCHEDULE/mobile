@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
+import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,10 +41,30 @@ class MainActivity : ComponentActivity() {
                     // 회원가입 화면 등록
                     composable("signup") {
                         SignUpScreen(
-                            onBack = {navController.popBackStack()}
+                            onBack = {navController.popBackStack()},
+                            onSignUpSuccess = {
+                                navController.navigate("profile_create") {
+                                    popUpTo("signup") {inclusive = true}
+                                }
+                            }
+
+
                         )
 
                     }
+
+                    // 프로필 생성 화면
+                    composable("profile_create") {
+                        ProfileScreen (
+                            initialProfile = null,
+                            onBackClick = {navController.popBackStack()},
+                            onActionClick = {profileData ->
+                                // 저장 성공 후 메인 화면 이동 필요
+
+                            }
+                        )
+                    }
+
 
                 }
             }
