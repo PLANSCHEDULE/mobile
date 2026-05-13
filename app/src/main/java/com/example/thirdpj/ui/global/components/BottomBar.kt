@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.components
+package com.example.thirdpj.ui.global.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite

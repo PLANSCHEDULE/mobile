@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.thirdpj.ui.components.BottomBar
+import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.mypage.components.HeartTemplateCard
 import com.example.thirdpj.ui.mypage.components.MyTemplateSection
 import com.example.thirdpj.ui.mypage.components.ProfileHeaderScreen
