@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.profile.components
+package com.example.thirdpj.ui.mypage.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

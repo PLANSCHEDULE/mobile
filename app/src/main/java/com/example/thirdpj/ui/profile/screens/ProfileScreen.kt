@@ -1,6 +1,5 @@
 package com.example.thirdpj.ui.profile.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,61 +9,89 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.thirdpj.ui.components.BottomBar
-import com.example.thirdpj.ui.profile.components.HeartTemplateCard
-import com.example.thirdpj.ui.profile.components.MyTemplateSection
-import com.example.thirdpj.ui.profile.components.ProfileHeaderScreen
+import com.example.thirdpj.data.profile.dto.ProfileResponse
+import com.example.thirdpj.ui.profile.components.ProfileForm
+import com.example.thirdpj.ui.profile.components.ProfileTopBar
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    initialProfile: ProfileResponse?= null,
+    onActionClick: (ProfileResponse) -> Unit = {},
+    onBackClick: () -> Unit = {}
+
+) {
+    val isEditMode = initialProfile != null
+
+    var handle by remember { mutableStateOf(initialProfile?.handle ?: "") }
+    var nickname by remember { mutableStateOf(initialProfile?.nickname ?:"") }
+    var bio by remember { mutableStateOf(initialProfile?.bio ?: "") }
+
+    // 유효성 검사
+    val isFormValid = handle.length >= 2 && nickname.isNotBlank()
+
     Scaffold(
-        bottomBar = { BottomBar() }
+        topBar = {
+            ProfileTopBar(
+                title = if(isEditMode) "프로필 수정" else "프로필 생성",
+                actionText = if(isEditMode) "저장" else "완료",
+                isActionEnabled = isFormValid,
+                onActionClick = {
+                    onActionClick(ProfileResponse(handle, nickname, bio))
+
+                },
+                onBackClick = onBackClick
+
+            )
+        }
     ) {innerPadding ->
         Column(
-            modifier = Modifier
+            modifier = Modifier.padding(innerPadding)
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState())
-                .background(Color(0xFFFDF9F6))
         ) {
-            ProfileHeaderScreen()
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            HeartTemplateCard()
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            MyTemplateSection(
-                title = "내 템플릿",
-                count = "3",
-                countColor = Color(0xFFFF5252)
+            ProfileForm(
+                handle = handle,
+                onHandleChange = {if(it.length <= 50) handle = it},
+                isHandleEditable = !isEditMode,
+                nickname = nickname,
+                onNicknameChange = {if(it.length <= 20) nickname = it},
+                bio = bio,
+                onBioChange = {if(it.length <=150) bio = it}
             )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            MyTemplateSection(
-                title = "포크한 템플릿",
-                count = "2",
-                countColor = Color(0xFF4A90E2)
-            )
-
-            Spacer(modifier = Modifier.height(100.dp))
+                Spacer(modifier = Modifier.height(40.dp))
         }
 
     }
 
 }
 
-@Preview
+@Preview(showBackground = true, name = "생성 모드")
 @Composable
-fun ProfileScreenPreview() {
+fun ProfileCreatePreview() {
     ThirdPJTheme {
-        ProfileScreen()
+        ProfileScreen(initialProfile = null)
+    }
+}
+
+@Preview(showBackground = true, name = "수정 모드")
+@Composable
+fun ProfileEditPreview() {
+    ThirdPJTheme {
+        ProfileScreen(
+            initialProfile = ProfileResponse(
+                handle = "gildong",
+                nickname = "홍길동",
+                bio = "안녕하세요! 안드로이드 개발 중입니다."
+            )
+        )
     }
 }
