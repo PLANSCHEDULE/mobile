@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,6 +53,8 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit,
             modifier = Modifier
                 .padding(innerPadding)
                 .padding(16.dp)
+                // 로그인 시에도 키보드 때문에 가려줄 수 있기 때문에 스크롤 추가
+                .verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.height(48.dp))
 
