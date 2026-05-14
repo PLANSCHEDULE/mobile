@@ -35,7 +35,13 @@ import com.example.thirdpj.R
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun TemplateCard(modifier: Modifier = Modifier) {
+fun TemplateCard(modifier: Modifier = Modifier,
+                 title: String = "일본 당일치기 도쿄",
+                 authorName: String = "길동",
+                 authorHandle: String = "@gildong",
+                 likeCount: String = "1234",
+                 downloadCount: String = "123",
+                 schedules: List<Pair<String, String>> = listOf("09:00" to "김포공항", "12:00" to "점심식사")) {
     Card(
         modifier = modifier
             .padding(4.dp),
@@ -96,7 +102,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
         ) {
             // 제목
             Text(
-                text = "일본 당일치기 도쿄",
+                text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp
 
@@ -116,7 +122,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
                     Box(contentAlignment = Alignment.Center) {
 
                         Text(
-                            text = "길동",
+                            text = authorName.take(1),
                             color = Color.White,
                             fontSize = 6.sp,
                             fontWeight = FontWeight.Bold
@@ -127,7 +133,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
-                    text = "@gildong",
+                    text = authorHandle,
                     color = Color.Gray,
                     fontSize = 10.sp
                 )
@@ -140,6 +146,20 @@ fun TemplateCard(modifier: Modifier = Modifier) {
             )
             
             // 일정 내용 구현 자리 필요!
+            schedules.forEach { (time, location) ->
+                Row(modifier = Modifier.padding(vertical = 1.dp)) {
+                    Text(text = time,
+                        fontSize = 10.sp,
+                        color = Color.Gray,
+                        modifier = Modifier.width(35.dp)
+                    )
+                    Text(text = "•",
+                        fontSize = 10.sp,
+                        color = Color.LightGray,
+                        modifier = Modifier.padding(horizontal = 4.dp))
+                    Text(text = location, fontSize = 10.sp, color = Color.DarkGray, maxLines = 1)
+                }
+            }
         }
 
         // 통계 영역 (통계 영역을 나중에 구현하는게 좋으려나. 한 번 생각해 보기)
@@ -158,7 +178,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
                 tint = Color.LightGray
             )
             // DB연결 시
-            Text("1234",
+            Text(text = likeCount,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(6.dp)
             )
@@ -175,7 +195,7 @@ fun TemplateCard(modifier: Modifier = Modifier) {
 
             )
 
-            Text("123",
+            Text(text = downloadCount,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(6.dp))
 
@@ -185,10 +205,28 @@ fun TemplateCard(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+@Preview(name = "기본 카드", showBackground = true)
 @Composable
 fun TemplateCardPreview() {
     ThirdPJTheme {
         TemplateCard()
+    }
+}
+
+@Preview(name = "긴 제목 카드", showBackground = true)
+@Composable
+fun LongTitleCardPreview() {
+    ThirdPJTheme {
+        TemplateCard(
+            title = "제주도 여행기제주도 여행기제주도 여행기제주도 여행기제주도 여행기제주도 여행기제주도 여행기제주도 여행기",
+            authorName = "홍길동",
+            authorHandle = "@hong_gildong",
+            likeCount = "999",
+            schedules = listOf(
+                "08:00" to "제주도 도착",
+                "10:00" to "스카이라이너 탑승",
+                "12:00" to "맛집 투어"
+            )
+        )
     }
 }

@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.R
-import com.example.thirdpj.ui.data.PlanItem
+import com.example.thirdpj.ui.testdata.PlanItem
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
