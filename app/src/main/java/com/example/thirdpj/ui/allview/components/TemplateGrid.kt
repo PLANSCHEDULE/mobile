@@ -25,7 +25,8 @@ fun TemplateGrid(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
+        // modifier 인자로 안오는데 / 변수명 modifier로 변경 Modifer로 해서 안됐음.
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
