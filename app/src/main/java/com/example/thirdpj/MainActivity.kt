@@ -22,6 +22,7 @@ import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.home.screens.HomeScreen
+import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.testdata.TemplateItemData
 import com.example.thirdpj.ui.theme.ThirdPJTheme
@@ -129,6 +130,14 @@ class MainActivity : ComponentActivity() {
 
 
                         // 마이페이지 화면
+                        // 연결은 안한건 맞는데 왜 하단바 누르면 앱이 종료되버리지
+                        // 같이 연결아직안된 검색은 눌러도 종료는 안되는데 원인 찾아봐야 될 듯
+                        composable("mypage") {
+                            (
+                                    MyPageScreen(navController = navController)
+                            )
+                        }
+
                     }
 
 

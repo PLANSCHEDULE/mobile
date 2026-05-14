@@ -20,7 +20,7 @@ import com.example.thirdpj.ui.mypage.components.ProfileHeaderScreen
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun MyPageScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,8 +56,8 @@ fun ProfileScreen(navController: NavController) {
 
 @Preview
 @Composable
-fun ProfileScreenPreview() {
+fun MyPageScreenPreview() {
     ThirdPJTheme {
-        ProfileScreen(navController = rememberNavController())
+        MyPageScreen(navController = rememberNavController())
     }
 }

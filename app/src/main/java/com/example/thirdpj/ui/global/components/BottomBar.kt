@@ -87,7 +87,7 @@ fun BottomBar(navController: NavController) {
                 }
             },
             icon = {Icon(Icons.Default.Person, contentDescription = "마이페이지")},
-            label = {Text("마이")}
+            label = {Text("마이페이지")}
         )
 
 
