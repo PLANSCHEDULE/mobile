@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,51 +31,43 @@ fun HomeScreen() {
         topBar = {
             HomeHeader()
         },
-
-        bottomBar = {
-            BottomBar()
-        },
-
+        // 하단 바 수정하면서 navigate 설정해 주면서 오류남
+        // MainActivity에서 구현함으로써 homescreen에서는 삭제
+        // 근데 mainActivity에서 설정을 해두었음
         containerColor = Color.White
     ) {innerPadding ->
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .padding(horizontal = 15.dp)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(horizontal = 15.dp)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            item(span = { GridItemSpan(2)}) {
+               Column{
+                   Spacer(modifier = Modifier.height(16.dp))
 
-            // 배너 영역
-            HomeBanner()
+                   HomeBanner()
 
-            Spacer(modifier = Modifier.height(24.dp))
+                   Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = "인기 템플릿",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
+                   Text(
+                       text = "인기 템플릿",
+                       fontWeight = FontWeight.Bold,
+                       fontSize = 18.sp
+                   )
+                   Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // 카드 영역
-            //lazycolumn?
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.weight(1f)
-            ) {
-                items(10){
-                    TemplateCard()
-                }
-                //말줄임표
-                item(span = { GridItemSpan(2)}) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
+               }
             }
 
+            items(10) {
+                TemplateCard(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
+
     }
 }
 
