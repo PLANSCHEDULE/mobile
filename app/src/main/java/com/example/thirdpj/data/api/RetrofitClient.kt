@@ -1,9 +1,8 @@
-package com.example.thirdpj.data.auth.network
+package com.example.thirdpj.data.api
 
 import com.example.thirdpj.data.auth.api.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 // 통신을 담당하는 역할
 object RetrofitClient {

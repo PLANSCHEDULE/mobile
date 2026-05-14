@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.R
 import com.example.thirdpj.data.auth.dto.SignUpRequest
-import com.example.thirdpj.data.auth.network.RetrofitClient
+import com.example.thirdpj.data.api.RetrofitClient
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
