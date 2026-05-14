@@ -101,7 +101,7 @@ fun ProfileForm(
 
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ProfileFormPreview() {
     ThirdPJTheme {
