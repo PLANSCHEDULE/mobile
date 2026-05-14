@@ -1,15 +1,15 @@
-package com.example.thirdpj.data.auth.api
+package com.example.thirdpj.data.api
 
-import com.example.thirdpj.data.auth.dto.SignUpRequest
-import com.example.thirdpj.data.auth.dto.SignUpResponse
 import com.example.thirdpj.data.GlobalDto.ApiResponse
 import com.example.thirdpj.data.auth.dto.LoginRequest
 import com.example.thirdpj.data.auth.dto.LoginResponse
+import com.example.thirdpj.data.auth.dto.SignUpRequest
+import com.example.thirdpj.data.auth.dto.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface ApiService {
+interface AuthService {
     // 회원가입
     @POST("/api/auth/signup")
     suspend fun signUp(@Body request: SignUpRequest): Response<ApiResponse<SignUpResponse>>
