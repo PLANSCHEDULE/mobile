@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.data
+package com.example.thirdpj.ui.testdata
 
 data class PlanItem(
     val id: Int,

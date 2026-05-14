@@ -19,8 +19,6 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun AllViewTopBar(
     title: String,
     onBackClick: () -> Unit
-
-
 ) {
     TopAppBar(
         title = {
