@@ -19,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,14 +33,25 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
+import com.example.thirdpj.util.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(onNavigateToSignUp: () -> Unit,
+fun LoginScreen(viewModel: LoginViewModel,
+                onNavigateToSignUp: () -> Unit,
                 onLoginSuccess: () -> Unit) {
+    val loginState by viewModel.loginState.collectAsState()
+
     var isEmailLoginVisible by remember { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    // 로그인 성공 감시
+    LaunchedEffect(loginState) {
+        if(loginState is UiState.Success) {
+            onLoginSuccess()
+        }
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -64,9 +77,14 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit,
                 Button(
                     onClick = {isEmailLoginVisible = true},
                     // 버튼이 너무 양 옆일 때 해결 방법: Column에 padding 적절히 주기. 안 주면 너무 양옆에 딱 붙어버림
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = loginState !is UiState.Loading
                 ) {
-                    Text("이메일로 로그인하기")
+                    if(loginState is UiState.Loading) {
+                        Text("로그인 중...")
+                    } else {
+                        Text("로그인")
+                    }
                 }
 
                 // 회원가입 이동
@@ -128,11 +146,16 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit,
                 // 로그인 버튼
                 Button(
                     onClick = {
-                        onLoginSuccess()
+                        viewModel.login(email, password)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = loginState !is UiState.Loading
                 ) {
-                    Text("로그인")
+                    if(loginState is UiState.Loading) {
+                        Text("로그인 중...")
+                    } else {
+                        Text("로그인")
+                    }
                 }
 
                 // 만약 잘못 눌렀을 경우 돌아가는 버튼도 필요할 듯!

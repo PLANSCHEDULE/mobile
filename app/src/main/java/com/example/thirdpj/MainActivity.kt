@@ -12,14 +12,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.thirdpj.data.api.RetrofitClient
+import com.example.thirdpj.data.repository.AuthRepository
 import com.example.thirdpj.ui.allview.screens.TemplateAllViewScreen
 import com.example.thirdpj.ui.auth.login.LoginScreen
+import com.example.thirdpj.ui.auth.login.LoginViewModel
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
+import com.example.thirdpj.ui.auth.signup.SignUpViewModel
 import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
@@ -34,6 +39,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             ThirdPJTheme {
                 val navController = rememberNavController()
+
+                val authService = RetrofitClient.authService
+                val authRepository = AuthRepository(authService)
+
+                val loginViewModel: LoginViewModel = viewModel { LoginViewModel(authRepository) }
+                val signUpViewModel: SignUpViewModel = viewModel { SignUpViewModel(authRepository) }
 
                 // 현재가 어떤 화면에 있는지 실시간으로 가져옴
                 // 로그인 화면과 같은데서는 하단바가 나오면 안됨. 그걸 처리하기 위해서 아래와 같은 변수로 처리가 필요함
@@ -61,10 +72,11 @@ class MainActivity : ComponentActivity() {
                         // 로그인 화면 등록
                         composable("login") {
                             LoginScreen(
+                                viewModel = loginViewModel,
                                 onNavigateToSignUp = {navController.navigate("signup")},
                                 onLoginSuccess = {
                                     navController.navigate("home") {
-                                        popUpTo("로그인"){ inclusive = true }
+                                        popUpTo("login"){ inclusive = true }
                                     }
                                 }
                             )
@@ -72,6 +84,7 @@ class MainActivity : ComponentActivity() {
                         // 회원가입 화면 등록
                         composable("signup") {
                             SignUpScreen(
+                                viewModel = signUpViewModel,
                                 onBack = {navController.popBackStack()},
                                 onSignUpSuccess = {
                                     navController.navigate("profile_create") {
