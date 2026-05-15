@@ -1,54 +1,61 @@
 package com.example.thirdpj.ui.auth.signup
 
-import android.util.Log
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thirdpj.R
-import com.example.thirdpj.data.auth.dto.SignUpRequest
-import com.example.thirdpj.data.auth.network.RetrofitClient
-import com.example.thirdpj.ui.theme.ThirdPJTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
+import com.example.thirdpj.util.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(onBack: () -> Unit,
+fun SignUpScreen(viewModel: SignUpViewModel,
+                 onBack: () -> Unit,
                  onSignUpSuccess: () -> Unit) {
+
+    val signUpState by viewModel.signUpState.collectAsState()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
-    // 비동기 통신용
-    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(signUpState) {
+        if(signUpState is UiState.Success) {
+            onSignUpSuccess()
+        }
+    }
     // 상단바, Scaffold
     Scaffold(
         // 화면 상단바를 만들기 위해서 Scaffold의 Topbar 사용
@@ -78,6 +85,18 @@ fun SignUpScreen(onBack: () -> Unit,
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
+
+            // 이름 입력창
+            OutlinedTextField(
+                value = name,
+                onValueChange = {name = it},
+                label = {Text("이름")},
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // 이메일 입력창
            OutlinedTextField(
                value = email,
@@ -106,43 +125,40 @@ fun SignUpScreen(onBack: () -> Unit,
                 )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
 
-            // 닉네임 입력창
-            OutlinedTextField(
-                value = name,
-                onValueChange = {name = it},
-                label = {Text("이름")},
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
-            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // 회원가입 완료 버튼
             Button(
                 onClick = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        try {
-                            val request = SignUpRequest(name, email, password)
-
-                            val response = RetrofitClient.api.signUp(request)
-
-                            if(response.isSuccessful) {
-                                withContext(Dispatchers.Main) {
-                                    onSignUpSuccess()
-                                }
-                            } else {
-                                Log.e("SignUp","서버 에러: ${response.errorBody()?.string()}")
-                            }
-                        } catch (e: Exception) {
-                            Log.e("SignUp","통신 실패: ${e.message}")
-                        }
-                    }
+                    viewModel.signUp(name, email, password)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = signUpState !is UiState.Loading
             ) {
-                Text("회원가입 하기")
+                if(signUpState is UiState.Loading) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("가입 처리 중...")
+                } else {
+                    Text("회원가입 완료")
+                }
+            }
+
+            // 에러 메시지 표시
+            if(signUpState is UiState.Error) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = (signUpState as UiState.Error).message,
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
 
         }
