@@ -5,7 +5,6 @@ import com.example.thirdpj.data.auth.dto.LoginRequest
 import com.example.thirdpj.data.auth.dto.LoginResponse
 import com.example.thirdpj.data.auth.dto.RefreshRequest
 import com.example.thirdpj.data.auth.dto.SignUpRequest
-import com.example.thirdpj.data.auth.dto.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -13,7 +12,7 @@ import retrofit2.http.POST
 interface AuthService {
     // 회원가입
     @POST("api/auth/signup")
-    suspend fun signUp(@Body request: SignUpRequest): Response<ApiResponse<SignUpResponse>>
+    suspend fun signUp(@Body request: SignUpRequest): Response<ApiResponse<LoginResponse>>
 
     // 로그인
     @POST("api/auth/login")

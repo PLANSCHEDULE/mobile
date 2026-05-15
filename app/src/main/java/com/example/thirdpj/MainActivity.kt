@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                 val authRepository = AuthRepository(authService)
 
                 val loginViewModel: LoginViewModel = viewModel { LoginViewModel(authRepository, tokenManager) }
-                val signUpViewModel: SignUpViewModel = viewModel { SignUpViewModel(authRepository) }
+                val signUpViewModel: SignUpViewModel = viewModel { SignUpViewModel(authRepository, tokenManager) }
 
                 // 현재가 어떤 화면에 있는지 실시간으로 가져옴
                 // 로그인 화면과 같은데서는 하단바가 나오면 안됨. 그걸 처리하기 위해서 아래와 같은 변수로 처리가 필요함
@@ -90,6 +90,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
+
                         // 회원가입 화면 등록
                         composable("signup") {
                             SignUpScreen(
