@@ -31,11 +31,20 @@ import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.testdata.TemplateItemData
 import com.example.thirdpj.ui.theme.ThirdPJTheme
+import com.example.thirdpj.util.TokenManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // retrofitclient 초기화
+        RetrofitClient.init(applicationContext)
+
+        val tokenManager = TokenManager(applicationContext)
+
+
         enableEdgeToEdge()
+
         setContent {
             ThirdPJTheme {
                 val navController = rememberNavController()
@@ -43,7 +52,7 @@ class MainActivity : ComponentActivity() {
                 val authService = RetrofitClient.authService
                 val authRepository = AuthRepository(authService)
 
-                val loginViewModel: LoginViewModel = viewModel { LoginViewModel(authRepository) }
+                val loginViewModel: LoginViewModel = viewModel { LoginViewModel(authRepository, tokenManager) }
                 val signUpViewModel: SignUpViewModel = viewModel { SignUpViewModel(authRepository) }
 
                 // 현재가 어떤 화면에 있는지 실시간으로 가져옴

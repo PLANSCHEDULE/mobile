@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.thirdpj.data.auth.dto.LoginRequest
 import com.example.thirdpj.data.auth.dto.LoginResponse
 import com.example.thirdpj.data.repository.AuthRepository
+import com.example.thirdpj.util.TokenManager
 import com.example.thirdpj.util.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val repository: AuthRepository): ViewModel(){
+class LoginViewModel(private val repository: AuthRepository,
+                     private val tokenManager: TokenManager): ViewModel(){
     private val _loginState = MutableStateFlow<UiState<LoginResponse>>(UiState.Idle)
     val loginState: StateFlow<UiState<LoginResponse>> = _loginState
 
@@ -29,6 +31,14 @@ class LoginViewModel(private val repository: AuthRepository): ViewModel(){
                     val body = response.body()
                     if(body != null && body.status == 200) {
                         Log.d("LOGIN_API", "로그인 성공 바디: ${body?.data}")
+
+                        // 로그인 성공 시 토큰 저장
+                        val data = body.data!!
+                        tokenManager.saveTokens(
+                            accessToken = data.accessToken,
+                            refreshToken = data.refreshToken
+                        )
+
                         // 서버에서 데이터를 잘 받아왔다면
                         _loginState.value = UiState.Success(body.data!!)
                     } else {
