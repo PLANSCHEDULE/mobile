@@ -36,7 +36,8 @@ class LoginViewModel(private val repository: AuthRepository,
                         val data = body.data!!
                         tokenManager.saveTokens(
                             accessToken = data.accessToken,
-                            refreshToken = data.refreshToken
+                            refreshToken = data.refreshToken,
+                            userId = data.userId
                         )
 
                         // 서버에서 데이터를 잘 받아왔다면

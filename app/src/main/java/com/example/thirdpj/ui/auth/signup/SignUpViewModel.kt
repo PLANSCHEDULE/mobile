@@ -38,7 +38,8 @@ class SignUpViewModel(private val repository: AuthRepository,
                         val data : LoginResponse = body.data!!
                         tokenManager.saveTokens(
                             accessToken = data.accessToken,
-                            refreshToken = data.refreshToken
+                            refreshToken = data.refreshToken,
+                            userId = data.userId
                         )
 
                         _signUpState.value = UiState.Success(data)

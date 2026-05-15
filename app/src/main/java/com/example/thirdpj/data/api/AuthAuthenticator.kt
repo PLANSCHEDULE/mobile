@@ -34,10 +34,11 @@ class AuthAuthenticator(
                     val loginResponse = refreshResponse.body()?.data
                     val newAccess = loginResponse?.accessToken
                     val newRefresh = loginResponse?.refreshToken
+                    val newUserId = loginResponse?.userId
 
-                    if (newAccess != null && newRefresh != null) {
+                    if (newAccess != null && newRefresh != null && newUserId != null) {
                         // 새로 받은 토큰들을 DataStore에 저장
-                        tokenManager.saveTokens(newAccess, newRefresh)
+                        tokenManager.saveTokens(newAccess, newRefresh, newUserId)
                         newAccess
                     } else null
                 } else null
