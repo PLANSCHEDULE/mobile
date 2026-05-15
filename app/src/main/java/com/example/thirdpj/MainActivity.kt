@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.thirdpj.data.api.RetrofitClient
+import com.example.thirdpj.data.profile.repository.ProfileRepository
 import com.example.thirdpj.data.repository.AuthRepository
 import com.example.thirdpj.ui.allview.screens.TemplateAllViewScreen
 import com.example.thirdpj.ui.auth.login.LoginScreen
@@ -29,6 +30,7 @@ import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
+import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.testdata.TemplateItemData
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import com.example.thirdpj.util.TokenManager
@@ -55,6 +57,10 @@ class MainActivity : ComponentActivity() {
                 val loginViewModel: LoginViewModel = viewModel { LoginViewModel(authRepository, tokenManager) }
                 val signUpViewModel: SignUpViewModel = viewModel { SignUpViewModel(authRepository, tokenManager) }
 
+                // 프로필 관련 서비스
+                val profileService = RetrofitClient.profileService
+                val profileRepository = ProfileRepository(profileService)
+                val profileViewModel: ProfileViewModel = viewModel { ProfileViewModel(profileRepository) }
                 // 현재가 어떤 화면에 있는지 실시간으로 가져옴
                 // 로그인 화면과 같은데서는 하단바가 나오면 안됨. 그걸 처리하기 위해서 아래와 같은 변수로 처리가 필요함
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -110,15 +116,14 @@ class MainActivity : ComponentActivity() {
                         // 프로필 생성 화면
                         composable("profile_create") {
                             ProfileScreen (
+                                viewModel = profileViewModel,
                                 initialProfile = null,
-                                onBackClick = {navController.popBackStack()},
-                                onActionClick = {profileData ->
+                                onSuccess = {
                                     navController.navigate("home") {
                                         popUpTo("profile_create") {
                                             inclusive = true
                                         }
                                     }
-
                                 }
                             )
                         }

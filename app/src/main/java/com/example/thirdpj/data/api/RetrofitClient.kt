@@ -2,6 +2,7 @@ package com.example.thirdpj.data.api
 
 import android.content.Context
 import com.example.thirdpj.data.api.AuthService
+import com.example.thirdpj.data.profile.api.ProfileService
 import com.example.thirdpj.util.TokenManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -38,7 +39,13 @@ object RetrofitClient {
             .build()
     }
 
+    //인증 서비스
     val authService: AuthService by lazy {
         retrofit.create(AuthService::class.java)
+    }
+
+    // 프로필 서비스
+    val profileService: ProfileService by lazy {
+        retrofit.create(ProfileService::class.java)
     }
 }
