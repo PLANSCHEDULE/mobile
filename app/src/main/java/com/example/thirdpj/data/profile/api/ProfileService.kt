@@ -1,6 +1,6 @@
 package com.example.thirdpj.data.profile.api
 
-import com.example.thirdpj.data.GlobalDto.ApiResponse
+import com.example.thirdpj.data.model.GlobalDto.ApiResponse
 import com.example.thirdpj.data.profile.dto.ProfileRequest
 import com.example.thirdpj.data.profile.dto.ProfileResponse
 import retrofit2.Response

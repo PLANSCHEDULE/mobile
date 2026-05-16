@@ -4,14 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
@@ -27,8 +31,10 @@ import com.example.thirdpj.ui.auth.login.LoginViewModel
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.auth.signup.SignUpViewModel
 import com.example.thirdpj.ui.global.components.BottomBar
+import com.example.thirdpj.ui.global.components.MainAddButton
 import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
+import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.testdata.TemplateItemData
@@ -69,6 +75,7 @@ class MainActivity : ComponentActivity() {
                 // 하단바를 숨길 경로
                 val hideBottomBarScreens = listOf("login", "signup", "profile_create")
 
+                val showFabScreens = listOf("home", "favorite", "mypage")
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     // 현재의 경로가 숨김 리스트에 없을 때만 하단바 보여주기
@@ -76,7 +83,24 @@ class MainActivity : ComponentActivity() {
                         if (currentRoute !in hideBottomBarScreens) {
                             BottomBar(navController = navController)
                         }
-                    }
+                    },
+                    floatingActionButton = {
+
+                        if(currentRoute in showFabScreens) {
+                            Box(
+                                modifier = Modifier.offset(y =24.dp)
+                            ) {
+                                MainAddButton ( onClick = {
+                                    navController.navigate("create_plan") {
+                                        launchSingleTop = true
+                                    }
+                                })
+                            }
+                        }
+                    },
+                    floatingActionButtonPosition = FabPosition.Center
+
+
 
                 ) {innerPadding ->
                     NavHost(
@@ -163,6 +187,15 @@ class MainActivity : ComponentActivity() {
                         composable("mypage") {
                             (
                                     MyPageScreen(navController = navController)
+                            )
+                        }
+
+                        composable("create_plan"){
+                            CreatePlanScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+
                             )
                         }
 

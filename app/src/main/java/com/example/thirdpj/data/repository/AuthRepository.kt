@@ -1,6 +1,6 @@
 package com.example.thirdpj.data.repository
 
-import com.example.thirdpj.data.GlobalDto.ApiResponse
+import com.example.thirdpj.data.model.GlobalDto.ApiResponse
 import com.example.thirdpj.data.api.AuthService
 import com.example.thirdpj.data.auth.dto.LoginRequest
 import com.example.thirdpj.data.auth.dto.LoginResponse
