@@ -1,6 +1,7 @@
 package com.example.thirdpj.ui.plan.create.screens
 
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +36,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.thirdpj.data.api.RetrofitClient
+import com.example.thirdpj.data.template.repository.TemplateRepository
 import com.example.thirdpj.ui.plan.components.AddPlanItemButton
 import com.example.thirdpj.ui.testdata.PlanItem
 import com.example.thirdpj.ui.plan.components.Plan
@@ -47,12 +53,22 @@ import java.time.LocalTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePlanScreen(
-    viewModel: CreatePlanViewModel,
+    viewModel: CreatePlanViewModel = viewModel(
+        factory = viewModelFactory {
+           initializer {
+                CreatePlanViewModel(
+                    repository = TemplateRepository(RetrofitClient.templateApiService)
+                )
+            }
+
+
+        }
+    ),
     onBackClick: () -> Unit = {}
 ) {
 
     val context = LocalContext.current
-    val planItems = remember { mutableStateListOf<PlanItem>().apply { addAll(initalItems) } }
+    val planItems = viewModel.planItems
 
     // bottomsheet 상태 확인
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -65,8 +81,19 @@ fun CreatePlanScreen(
 
     Scaffold(
         topBar = {
-            CreatePlanTopBar(onBackClick =  onBackClick
-            ,
+            CreatePlanTopBar(
+                onBackClick =  onBackClick,
+                onSaveClick = {
+                    viewModel.saveTemplateToServer(
+                        onSuccess = {
+                            Toast.makeText(context, "성공적으로 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                            onBackClick()
+                        },
+                        onError = {errorMessage ->
+                            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                        }
+                    )
+                }
 
 
 
@@ -82,7 +109,10 @@ fun CreatePlanScreen(
 
         ) {
             // 헤더 고정 안됨 -> header을 lazycolumn안에 둬서 고정이 되지 않았음
-            CreatePlanHeader()
+            CreatePlanHeader(
+                title = viewModel.templateTitle,
+                onTitleChange = {viewModel.onTitleChange(it)}
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 

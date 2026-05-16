@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.thirdpj.data.template.api.TemplateApiService
 import com.example.thirdpj.data.template.dto.TemplateCreateRequest
 import com.example.thirdpj.data.template.dto.TemplateItemDto
+import com.example.thirdpj.data.template.repository.TemplateRepository
 import com.example.thirdpj.ui.testdata.PlanItem
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -16,7 +17,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class CreatePlanViewModel(
-    private val apiService: TemplateApiService
+    private val repository: TemplateRepository
 ) : ViewModel() {
 
     var templateTitle by mutableStateOf("")
@@ -61,20 +62,15 @@ class CreatePlanViewModel(
                     items = itemDtos
                 )
 
-                val response = apiService.createTemplate(requestBody)
+                val result = repository.createTemplate(requestBody)
 
-                if (response.isSuccessful) {
-                    val apiResponse = response.body()
-                    if (apiResponse != null && apiResponse.status == 200) {
-                        onSuccess()
-                    } else {
-                        onError(apiResponse?.message ?: "서버 오류가 발생했습니다.")
-                    }
-                } else {
-                    onError("네트워크 요청 실패 (코드: ${response.code()})")
+                result.onSuccess {
+                    onSuccess()
+                }.onFailure { exception ->
+                    onError(exception.localizedMessage ?: "알 수 없는 에러가 발생했습니다.")
                 }
             } catch (e: Exception) {
-                onError("인터넷 연결을 확인해 주세요.")
+                onError("인터넷 연결 상태를 확인해 주세요.")
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -30,26 +31,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePlanHeader(
+    title: String,
+    onTitleChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 
 ) {
-
-    var title by remember { mutableStateOf("") }
-
     val today = remember {
         // java.time 대신 java.util.Date
         // 지금 최소 버전은 24로 해놓았기 때문에 26이상에서 사용가능한 java.time보단 java.util.time을 사용
-        val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
-        formatter.format(Date())
+       // min버전 바꿈
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd", Locale.getDefault())
+        LocalDate.now().format(formatter)
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(Color(0xFFFFFBF5))
             .padding(horizontal = 20.dp, vertical = 24.dp)
@@ -71,9 +75,7 @@ fun CreatePlanHeader(
         // 제목 입력창
         BasicTextField(
             value = title,
-            onValueChange = {
-                title = it
-            },
+            onValueChange = onTitleChange,
             // 아래서 발생한 제목을 입력하세요와 커서 입력 차이를 textStyle로 지정해주면 해결됨!
             textStyle = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
             decorationBox = {innerTextField ->
@@ -108,8 +110,9 @@ fun CreatePlanHeader(
                 modifier = Modifier.size(16.dp),
                 tint = Color(0xFFF27A54)
             )
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = "$today",
+                text = today,
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Black
             )
@@ -124,6 +127,10 @@ fun CreatePlanHeader(
 @Composable
 fun CreatePlanHeaderPreview() {
     ThirdPJTheme {
-        CreatePlanHeader()
+        CreatePlanHeader(
+            title = "제주 2박 3일 힐링 여행",
+            onTitleChange = {}
+
+        )
     }
 }
