@@ -34,4 +34,9 @@ interface TemplateApiService {
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 10
     ): Response<ApiResponse<SliceResponse<TemplateResponse>>>
+
+    @GET("api/templates/{templateId}")
+    suspend fun getTemplateDetail(
+        @Path("templateId") templateId: Long
+    ): Response<ApiResponse<TemplateResponse>>
 }

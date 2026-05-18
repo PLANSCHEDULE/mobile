@@ -40,6 +40,7 @@ import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.home.screens.HomeViewModel
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
+import com.example.thirdpj.ui.plan.detail.screen.TemplateDetailScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.testdata.TemplateItemData
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view")
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}")
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
 
@@ -190,7 +191,10 @@ class MainActivity : ComponentActivity() {
                                     MyPageScreen(
                                         navController = navController,
                                         viewModel = profileViewModel,
-                                        onHeartClick = {navController.navigate("favorite")})
+                                        onHeartClick = {navController.navigate("favorite")},
+                                        onTemplateClick = { id -> navController.navigate("template_detail/$id") }
+                                    )
+
                             )
                         }
 
@@ -200,6 +204,14 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                 }
 
+                            )
+                        }
+
+                        composable("template_detail/{templateId}") { backStackEntry ->
+                            val templateId = backStackEntry.arguments?.getString("templateId")?.toLong() ?: return@composable
+                            TemplateDetailScreen(
+                                templateId = templateId,
+                                onBackClick = { navController.popBackStack() }
                             )
                         }
 

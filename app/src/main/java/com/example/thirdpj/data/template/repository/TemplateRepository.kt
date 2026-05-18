@@ -66,4 +66,19 @@ class TemplateRepository(private val templateService: TemplateApiService) {
         }
     }
 
+    suspend fun getTemplateDetail(templateId: Long): Result<TemplateResponse> {
+        return try {
+            val response = templateService.getTemplateDetail(templateId)
+            if (response.isSuccessful) {
+                val data = response.body()?.data
+                    ?: return Result.failure(Exception("응답 데이터가 없습니다."))
+                Result.success(data)
+            } else {
+                Result.failure(Exception("상세 조회 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }
