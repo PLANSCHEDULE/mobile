@@ -30,9 +30,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.thirdpj.R
@@ -49,6 +51,12 @@ fun PostTemplateCard(
     var isFavorite by remember(template.isFavorite) { mutableStateOf(template.isFavorite) }
     var favoriteCount by remember(template.favoriteCount) { mutableIntStateOf(template.favoriteCount) }
     var downloadCount by remember(template.downloadCount) { mutableIntStateOf(template.downloadCount) }
+
+    val displayItems = template.items.sortedBy { it.sequence }.take(2)
+    val remainCount = template.items.size - 2
+    val hasMore = remainCount > 0
+
+
     Card(
         modifier = modifier
             .padding(4.dp),
@@ -112,7 +120,9 @@ fun PostTemplateCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp)
-                .defaultMinSize(minHeight = 140.dp)
+                .height(140.dp)
+                .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
+//                .defaultMinSize(minHeight = 140.dp)
 
         ) {
             // 제목
@@ -162,7 +172,7 @@ fun PostTemplateCard(
             )
 
             // 일정 내용 구현 자리 필요!
-            template.items.sortedBy { it.sequence }.forEach { item ->
+            displayItems.forEach { item ->
                 Row(modifier = Modifier.padding(vertical = 1.dp)) {
                     Text(text = item.itemTime,
                         fontSize = 10.sp,
@@ -179,6 +189,17 @@ fun PostTemplateCard(
                     )
                 }
             }
+            if (hasMore) {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "+${remainCount}개 더",
+                    fontSize = 10.sp,
+                    color = Color.Gray,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            }
+
         }
 
         // 통계 영역 (통계 영역을 나중에 구현하는게 좋으려나. 한 번 생각해 보기)
