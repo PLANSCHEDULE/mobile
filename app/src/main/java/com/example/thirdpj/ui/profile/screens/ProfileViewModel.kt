@@ -7,12 +7,15 @@ import com.example.thirdpj.data.profile.repository.ProfileRepository
 import com.example.thirdpj.util.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<ProfileResponse>>(UiState.Idle)
     val uiState: StateFlow<UiState<ProfileResponse>> = _uiState
 
+    private val _profile = MutableStateFlow<ProfileResponse?>(null)
+    val profile: StateFlow<ProfileResponse?> = _profile.asStateFlow()
     fun createProfile(handle: String, nickname: String, bio: String) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
@@ -28,6 +31,14 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
 
     fun resetState() {
         _uiState.value = UiState.Idle
+    }
+
+    fun fetchMyProfile() {
+        viewModelScope.launch {
+            repository.getMyProfile()
+                .onSuccess { _profile.value = it }
+                .onFailure { it.printStackTrace() }
+        }
     }
 
 }

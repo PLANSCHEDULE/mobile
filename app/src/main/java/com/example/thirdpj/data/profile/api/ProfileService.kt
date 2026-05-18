@@ -5,6 +5,7 @@ import com.example.thirdpj.data.profile.dto.ProfileRequest
 import com.example.thirdpj.data.profile.dto.ProfileResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ProfileService {
@@ -12,4 +13,8 @@ interface ProfileService {
     suspend fun createProfile(
         @Body request: ProfileRequest
     ): Response<ApiResponse<ProfileResponse>>
+
+
+    @GET("api/profiles")
+    suspend fun getMyProfile(): Response<ApiResponse<ProfileResponse>>
 }

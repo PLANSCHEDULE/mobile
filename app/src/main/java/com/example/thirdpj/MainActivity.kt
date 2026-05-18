@@ -187,7 +187,9 @@ class MainActivity : ComponentActivity() {
                         // 같이 연결아직안된 검색은 눌러도 종료는 안되는데 원인 찾아봐야 될 듯
                         composable("mypage") {
                             (
-                                    MyPageScreen(navController = navController)
+                                    MyPageScreen(
+                                        navController = navController,
+                                        viewModel = profileViewModel)
                             )
                         }
 

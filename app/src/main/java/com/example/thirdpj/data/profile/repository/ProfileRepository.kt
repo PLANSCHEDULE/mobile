@@ -18,4 +18,17 @@ class ProfileRepository(private val profileService: ProfileService) {
         }
     }
 
+    suspend fun getMyProfile(): Result<ProfileResponse> {
+        return try {
+            val response = profileService.getMyProfile()
+            if (response.isSuccessful) {
+                Result.success(response.body()!!.data!!)
+            } else {
+                Result.failure(Exception("프로필 조회 실패: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }
