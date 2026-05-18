@@ -87,10 +87,19 @@ fun CreatePlanScreen(
                     viewModel.saveTemplateToServer(
                         onSuccess = {
                             Toast.makeText(context, "성공적으로 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                            onBackClick()
                         },
                         onError = {errorMessage ->
                             Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                        }
+                    )
+                },
+                onShareClick = {
+                    viewModel.shareTemplate(
+                        onSuccess = {
+                            Toast.makeText(context, "공유되었습니다!", Toast.LENGTH_SHORT).show()
+                        },
+                        onError = { msg ->
+                            Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                         }
                     )
                 }

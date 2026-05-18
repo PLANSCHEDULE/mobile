@@ -33,7 +33,8 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun CreatePlanTopBar(
     onBackClick: () -> Unit = {},
-    onSaveClick: () -> Unit = {}
+    onSaveClick: () -> Unit = {},
+    onShareClick: () -> Unit = {}
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -69,7 +70,7 @@ fun CreatePlanTopBar(
 
             // 공유 버튼
             Button(
-                onClick = {},
+                onClick = onShareClick,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF27A54)),
                 shape = RoundedCornerShape(12.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)

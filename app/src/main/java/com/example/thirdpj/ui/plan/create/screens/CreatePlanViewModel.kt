@@ -28,7 +28,7 @@ class CreatePlanViewModel(
     }
 
     val planItems = mutableStateListOf<PlanItem>()
-
+    private var savedTemplateId: Long? = null
     fun saveTemplateToServer(onSuccess: () -> Unit, onError: (String) -> Unit) {
 
         if (templateTitle.isBlank()) {
@@ -62,17 +62,29 @@ class CreatePlanViewModel(
                     items = itemDtos
                 )
 
-                val result = repository.createTemplate(requestBody)
-
-                result.onSuccess {
-                    onSuccess()
-                }.onFailure { exception ->
-                    onError(exception.localizedMessage ?: "알 수 없는 에러가 발생했습니다.")
-                }
+                repository.createTemplate(requestBody)
+                    .onSuccess { response ->
+                        savedTemplateId = response.id
+                        onSuccess()
+                    }
+                    .onFailure { exception ->
+                        onError(exception.localizedMessage ?: "알 수 없는 에러가 발생했습니다.")
+                    }
             } catch (e: Exception) {
                 onError("인터넷 연결 상태를 확인해 주세요.")
             }
         }
     }
 
+    fun shareTemplate(onSuccess: () -> Unit, onError: (String) -> Unit) {
+        val id = savedTemplateId ?: run {
+            onError("먼저 템플릿을 저장해주세요.")
+            return
+        }
+        viewModelScope.launch {
+            repository.shareTemplate(id)
+                .onSuccess { onSuccess() }
+                .onFailure { onError(it.message ?: "공유 중 오류가 발생했습니다.") }
+        }
+    }
 }
