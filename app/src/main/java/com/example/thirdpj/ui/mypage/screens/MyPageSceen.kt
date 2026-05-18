@@ -37,11 +37,14 @@ fun MyPageScreen(navController: NavController,
     val profile by viewModel.profile.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
     val myTemplates by myPageViewModel.myTemplates.collectAsStateWithLifecycle()
+    val downloadedTemplates by myPageViewModel.downloadedTemplates.collectAsStateWithLifecycle()
+
 
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.fetchMyProfile()
             myPageViewModel.fetchMyTemplates(isRefresh = true)
+            myPageViewModel.fetchDownloadedTemplates(isRefresh = true)
         }
     }
 
@@ -77,8 +80,9 @@ fun MyPageScreen(navController: NavController,
 
         MyTemplateSection(
             title = "포크한 템플릿",
-            count = "2",
-            countColor = Color(0xFF4A90E2)
+            count = downloadedTemplates.size.toString(),
+            countColor = Color(0xFF4A90E2),
+            templates = downloadedTemplates
         )
 
         Spacer(modifier = Modifier.height(30.dp))

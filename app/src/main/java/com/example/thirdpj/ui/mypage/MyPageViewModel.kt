@@ -19,6 +19,9 @@ class MyPageViewModel : ViewModel() {
     private var currentPage = 0
     private var isLastPage = false
 
+    private val _downloadedTemplates = MutableStateFlow<List<TemplateResponse>>(emptyList())
+    val downloadedTemplates: StateFlow<List<TemplateResponse>> = _downloadedTemplates.asStateFlow()
+
     fun fetchMyTemplates(isRefresh: Boolean = false) {
         if (isLastPage && !isRefresh) return
 
@@ -35,6 +38,14 @@ class MyPageViewModel : ViewModel() {
                     isLastPage = slice.last
                     if (!isLastPage) currentPage++
                 }
+                .onFailure { it.printStackTrace() }
+        }
+    }
+
+    fun fetchDownloadedTemplates(isRefresh: Boolean = false) {
+        viewModelScope.launch {
+            repository.getMyDownloadedTemplates(page = 0, size = 10)
+                .onSuccess { slice -> _downloadedTemplates.value = slice.content }
                 .onFailure { it.printStackTrace() }
         }
     }

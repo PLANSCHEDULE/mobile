@@ -18,8 +18,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.thirdpj.data.template.dto.TemplateResponse
@@ -32,6 +34,9 @@ fun MyTemplateCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
+    val displayItems = template.items.sortedBy { it.sequence }.take(2)
+    val remainCount = template.items.size - 2
+    val hasMore = remainCount > 0
     Card(
         modifier = modifier
             .width(160.dp)
@@ -57,7 +62,9 @@ fun MyTemplateCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp)
-                .defaultMinSize(minHeight = 100.dp)
+                .height(110.dp) // 이렇게 안하니까 카드길이 마음대로 늘어남
+                .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
+//                .defaultMinSize(minHeight = 100.dp)
         ) {
             Text(
                 text = template.title,
@@ -72,7 +79,7 @@ fun MyTemplateCard(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            template.items.sortedBy { it.sequence }.forEach { item ->
+            displayItems.forEach { item ->
                 Row(modifier = Modifier.padding(vertical = 1.dp)) {
                     Text(
                         text = item.itemTime,
@@ -93,6 +100,17 @@ fun MyTemplateCard(
                         maxLines = 1
                     )
                 }
+            }
+            if (hasMore) {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "+${remainCount}개 더",
+                    fontSize = 10.sp,
+                    color = Color.Gray,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+
+                )
             }
         }
 

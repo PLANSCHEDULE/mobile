@@ -28,4 +28,10 @@ interface TemplateApiService {
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 10
     ) : Response<ApiResponse<SliceResponse<TemplateResponse>>>
+
+    @GET("api/templates/me/downloaded")
+    suspend fun getMyDownloadedTemplates(
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 10
+    ): Response<ApiResponse<SliceResponse<TemplateResponse>>>
 }
