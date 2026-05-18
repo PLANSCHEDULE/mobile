@@ -97,4 +97,17 @@ class TemplateRepository(private val templateService: TemplateApiService) {
         }
     }
 
+    suspend fun deleteTemplate(templateId: Long): Result<Unit> {
+        return try {
+            val response = templateService.deleteTemplate(templateId)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("삭제 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.thirdpj.ui.plan.detail.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,10 +42,10 @@ fun TemplateDetailScreen(
     templateId: Long,
     onBackClick: () -> Unit,
     onEditClick: (Long) -> Unit = {},
-    onDeleteClick: (Long) -> Unit = {},
     viewModel: TemplateDetailViewModel = viewModel()
 ) {
     val template by viewModel.template.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(templateId) {
         viewModel.fetchTemplateDetail(templateId)
@@ -54,7 +56,21 @@ fun TemplateDetailScreen(
             DetailPlanTopBar(
                 onBackClick = onBackClick,
                 onEditClick = { template?.let { onEditClick(it.id) } },
-                onDeleteClick = { template?.let { onDeleteClick(it.id) } }
+                onDeleteClick = {
+                    template?.let {
+                        viewModel.deleteTemplate(
+                            templateId = it.id,
+                            onSuccess = {
+                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                                onBackClick()
+                            },
+                            onError = { msg ->
+                                Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                            }
+                        )
+                    }
+
+                }
             )
         },
         containerColor = Color(0xFFFFFBF5)

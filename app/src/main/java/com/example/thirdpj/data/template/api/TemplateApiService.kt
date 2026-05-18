@@ -8,6 +8,7 @@ import com.example.thirdpj.data.template.dto.TemplateResponse
 import com.example.thirdpj.data.template.dto.TemplateUpdateRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -47,4 +48,10 @@ interface TemplateApiService {
         @Path("templateId") templateId: Long,
         @Body request: TemplateUpdateRequest
     ): Response<ApiResponse<TemplateResponse>>
+
+
+    @DELETE("api/templates/{templateId}")
+    suspend fun deleteTemplate(
+        @Path("templateId") templateId: Long
+    ): Response<ApiResponse<Unit>>
 }

@@ -23,5 +23,13 @@ class TemplateDetailViewModel : ViewModel() {
                 .onFailure { it.printStackTrace() }
         }
     }
+    // 템플릿 삭제
+    fun deleteTemplate(templateId: Long, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            repository.deleteTemplate(templateId)
+                .onSuccess { onSuccess() }
+                .onFailure { onError(it.message ?: "삭제 중 오류가 발생했습니다.") }
+        }
+    }
 
 }
