@@ -23,7 +23,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.thirdpj.ui.global.components.TemplateCard
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
@@ -75,11 +74,7 @@ fun MyTemplateSection(
             contentPadding = PaddingValues(horizontal = 20.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(5) {index ->
-                TemplateCard(
-                    modifier = Modifier.width(180.dp)
-                )
-            }
+
 
         }
     }

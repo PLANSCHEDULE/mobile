@@ -1,5 +1,6 @@
 package com.example.thirdpj.data.post.repository
 
+import android.util.Log
 import com.example.thirdpj.data.post.api.PostTemplateApiService
 import com.example.thirdpj.data.post.dto.PostTemplateDto
 import com.example.thirdpj.data.post.dto.SliceResponse
@@ -9,7 +10,8 @@ class PostTemplateRepository(private val apiService: PostTemplateApiService) {
     suspend fun getAllTemplates(page: Int, size: Int): Result<SliceResponse<PostTemplateDto>> {
         return try {
             val response = apiService.getAllTemplates(page = page, size = size)
-
+            val rawBody = response.errorBody()?.string() ?: response.body().toString()
+            Log.d("API_RAW", rawBody)
             if (response.isSuccessful) {
                 val apiResponse = response.body()
 
@@ -25,4 +27,16 @@ class PostTemplateRepository(private val apiService: PostTemplateApiService) {
             Result.failure(e)
         }
     }
+
+    // top 10
+    suspend fun getTop10Templates() : Result<List<PostTemplateDto>> {
+        return runCatching {
+            val response = apiService.getTop10Templates()
+            response.body()?.data ?:emptyList()
+        }
+    }
+
+
+
+
 }

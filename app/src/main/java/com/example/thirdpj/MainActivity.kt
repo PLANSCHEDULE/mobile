@@ -12,17 +12,20 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.thirdpj.data.api.RetrofitClient
+import com.example.thirdpj.data.post.dto.PostTemplateDto
+import com.example.thirdpj.data.post.dto.PostTemplateItem
 import com.example.thirdpj.data.profile.repository.ProfileRepository
 import com.example.thirdpj.data.repository.AuthRepository
 import com.example.thirdpj.ui.allview.screens.TemplateAllViewScreen
@@ -33,6 +36,7 @@ import com.example.thirdpj.ui.auth.signup.SignUpViewModel
 import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.global.components.MainAddButton
 import com.example.thirdpj.ui.home.screens.HomeScreen
+import com.example.thirdpj.ui.home.screens.HomeViewModel
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
@@ -73,7 +77,7 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create")
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view")
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
                 Scaffold(
@@ -153,31 +157,58 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("home") {
-                            HomeScreen()
+                            HomeScreen(
+                                onBrowseClick = {
+                                    navController.navigate("top10_view")
+                                }
+                            )
                         }
 
                         // 찜 화면 연결해야됨
                         composable("favorite") {
                             //테스트용 더미 데이터. 나중에 viewmodel로 백엔드와 연결 예정
                             val dummyList = listOf(
-                                TemplateItemData(1, "일본 당일치기 도쿄", "길동", "@gildong", "1234", "123", listOf("09:00" to "공항", "12:00" to "식사")),
-                                TemplateItemData(2, "제주도 힐링 여행", "철수", "@chulsoo", "500", "50", listOf("10:00" to "제주공항", "14:00" to "카페")),
-                                TemplateItemData(3, "서울 밤도깨비 야시장", "영희", "@younghee", "2.5k", "400", listOf("18:00" to "여의도", "20:00" to "푸드트럭")),
-                                TemplateItemData(4, "속초 만석닭강정 투어", "미애", "@miae", "99", "10", listOf("11:00" to "중앙시장", "15:00" to "속초해변")),
-                                TemplateItemData(5, "전주 한옥마을 정복", "도령", "@doryung", "1.1k", "220", listOf("12:00" to "경기전", "14:00" to "비빔밥")),
-                                TemplateItemData(6, "경주 황리단길 산책", "박사", "@doctor", "880", "150", listOf("10:00" to "첨성대", "13:00" to "십원빵"))
+                                PostTemplateDto(
+                                    postTemplateId = 1L, title = "일본 당일치기 도쿄", background = null,
+                                    authorHandle = "@gildong", favoriteCount = 1234, downloadCount = 123, isFavorite = true,
+                                    items = listOf(PostTemplateItem("09:00", "공항", 1), PostTemplateItem("12:00", "식사", 2))
+                                ),
+                                PostTemplateDto(
+                                    postTemplateId = 2L,
+                                    title = "제주도 힐링 여행",
+                                    background = null,
+                                    authorHandle = "@chulsoo",
+                                    favoriteCount = 500,
+                                    downloadCount = 50,
+                                    isFavorite = false,
+                                    items = listOf(
+                                        PostTemplateItem("10:00", "제주공항", 1),
+                                        PostTemplateItem("14:00", "카페", 2)
+                                    )
+                                )
                             )
-
                             TemplateAllViewScreen(
                                 title = "찜한 템플릿",
                                 templates = dummyList,
-                                onBackClick = {
-                                    navController.popBackStack()
-                                },
-                                onCardClick = {templateId ->
-                                    // 여기는 상세페이지 이동으로 설정해야됨. 아직 ui 구현 못함..
-                                }
+                                onBackClick = { navController.popBackStack() },
+                                onCardClick = { templateId -> }
                             )
+                        }
+
+                        composable("top10_view") {
+                            val homeViewModel: HomeViewModel = viewModel { HomeViewModel() }
+                            val top10 by homeViewModel.top10Templates.collectAsStateWithLifecycle()
+
+                            LaunchedEffect(Unit) {
+                                homeViewModel.fetchTop10()
+                            }
+
+                            TemplateAllViewScreen(
+                                title = "이번주 BEST TOP 10",
+                                templates = top10,
+                                onBackClick = { navController.popBackStack() }
+                            )
+
                         }
 
 

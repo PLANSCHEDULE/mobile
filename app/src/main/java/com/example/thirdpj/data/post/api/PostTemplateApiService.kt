@@ -8,10 +8,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PostTemplateApiService {
-    @GET("paging")
+    @GET("api/posts/paging")
     suspend fun getAllTemplates(
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 10,
         @Query("sort") sort: String ="createdAt,desc"
     ) : Response<ApiResponse<SliceResponse<PostTemplateDto>>>
+
+    @GET("api/posts/top10")
+    suspend fun getTop10Templates() : Response<ApiResponse<List<PostTemplateDto>>>
 }

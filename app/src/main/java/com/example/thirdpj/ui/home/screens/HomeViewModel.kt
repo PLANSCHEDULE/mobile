@@ -19,19 +19,38 @@ class HomeViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    fun fetchTemplates() {
+    private var currentPage = 0
+    private var isLastPage = false
+
+    fun fetchTemplates(isRefresh: Boolean = false) {
+        if (_isLoading.value || (!isRefresh && isLastPage)) return
+
+        if (isRefresh) {
+            currentPage = 0
+            isLastPage = false
+        }
+
         viewModelScope.launch {
             _isLoading.value = true
-
-            val result = repository.getAllTemplates(page = 0, size = 10)
-
-            result.onSuccess { sliceResponse ->
-                _templates.value = sliceResponse.content
-            }.onFailure { exception ->
-                exception.printStackTrace()
-            }
-
+            repository.getAllTemplates(page = currentPage, size = 10)
+                .onSuccess { slice ->
+                    _templates.value = if (isRefresh) slice.content
+                    else _templates.value + slice.content
+                    isLastPage = slice.last
+                    if (!isLastPage) currentPage++
+                }
+                .onFailure { it.printStackTrace() }
             _isLoading.value = false
+        }
+    }
+    private val _top10Templates = MutableStateFlow<List<PostTemplateDto>>(emptyList())
+    val top10Templates: StateFlow<List<PostTemplateDto>> = _top10Templates.asStateFlow()
+
+    fun fetchTop10() {
+        viewModelScope.launch {
+            repository.getTop10Templates()
+                .onSuccess { _top10Templates.value = it }
+                .onFailure { it.printStackTrace() }
         }
     }
 }
