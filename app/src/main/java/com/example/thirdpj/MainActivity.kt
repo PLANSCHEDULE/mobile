@@ -80,6 +80,8 @@ class MainActivity : ComponentActivity() {
                 val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view")
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
+
+                val homeViewModel: HomeViewModel = viewModel { HomeViewModel() }
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     // 현재의 경로가 숨김 리스트에 없을 때만 하단바 보여주기
@@ -158,6 +160,7 @@ class MainActivity : ComponentActivity() {
 
                         composable("home") {
                             HomeScreen(
+                                viewModel = homeViewModel,
                                 onBrowseClick = {
                                     navController.navigate("top10_view")
                                 }
@@ -165,47 +168,40 @@ class MainActivity : ComponentActivity() {
                         }
 
                         // 찜 화면 연결해야됨
-                        composable("favorite") {
-                            //테스트용 더미 데이터. 나중에 viewmodel로 백엔드와 연결 예정
-                            val dummyList = listOf(
-                                PostTemplateDto(
-                                    postTemplateId = 1L, title = "일본 당일치기 도쿄", background = null,
-                                    authorHandle = "@gildong", favoriteCount = 1234, downloadCount = 123, isFavorite = true,
-                                    items = listOf(PostTemplateItem("09:00", "공항", 1), PostTemplateItem("12:00", "식사", 2))
-                                ),
-                                PostTemplateDto(
-                                    postTemplateId = 2L,
-                                    title = "제주도 힐링 여행",
-                                    background = null,
-                                    authorHandle = "@chulsoo",
-                                    favoriteCount = 500,
-                                    downloadCount = 50,
-                                    isFavorite = false,
-                                    items = listOf(
-                                        PostTemplateItem("10:00", "제주공항", 1),
-                                        PostTemplateItem("14:00", "카페", 2)
-                                    )
-                                )
-                            )
-                            TemplateAllViewScreen(
-                                title = "찜한 템플릿",
-                                templates = dummyList,
-                                onBackClick = { navController.popBackStack() },
-                                onCardClick = { templateId -> }
-                            )
-                        }
+//                        composable("favorite") {
+//                            //테스트용 더미 데이터. 나중에 viewmodel로 백엔드와 연결 예정
+//                            val dummyList = listOf(
+//                                PostTemplateDto(
+//                                    postTemplateId = 1L, title = "일본 당일치기 도쿄", background = null,
+//                                    authorHandle = "@gildong", favoriteCount = 1234, downloadCount = 123, isFavorite = true,
+//                                    items = listOf(PostTemplateItem("09:00", "공항", 1), PostTemplateItem("12:00", "식사", 2))
+//                                ),
+//                                PostTemplateDto(
+//                                    postTemplateId = 2L,
+//                                    title = "제주도 힐링 여행",
+//                                    background = null,
+//                                    authorHandle = "@chulsoo",
+//                                    favoriteCount = 500,
+//                                    downloadCount = 50,
+//                                    isFavorite = false,
+//                                    items = listOf(
+//                                        PostTemplateItem("10:00", "제주공항", 1),
+//                                        PostTemplateItem("14:00", "카페", 2)
+//                                    )
+//                                )
+//                            )
+//                            TemplateAllViewScreen(
+//                                title = "찜한 템플릿",
+//                                templates = dummyList,
+//                                onBackClick = { navController.popBackStack() },
+//                                onCardClick = { templateId -> }
+//                            )
+//                        }
 
                         composable("top10_view") {
-                            val homeViewModel: HomeViewModel = viewModel { HomeViewModel() }
-                            val top10 by homeViewModel.top10Templates.collectAsStateWithLifecycle()
-
-                            LaunchedEffect(Unit) {
-                                homeViewModel.fetchTop10()
-                            }
 
                             TemplateAllViewScreen(
                                 title = "이번주 BEST TOP 10",
-                                templates = top10,
                                 onBackClick = { navController.popBackStack() }
                             )
 

@@ -36,6 +36,34 @@ class PostTemplateRepository(private val apiService: PostTemplateApiService) {
         }
     }
 
+    // 다운로드
+    suspend fun downloadTemplate(postTemplateId: Long): Result<Unit> {
+        return try {
+            val response = apiService.downloadTemplate(postTemplateId)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("다운로드 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // 찜 토글
+    suspend fun toggleFavorite(postTemplateId: Long): Result<Unit> {
+        return try {
+            val response = apiService.toggleFavorite(postTemplateId)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("찜 토글 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 
 
 

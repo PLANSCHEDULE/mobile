@@ -21,7 +21,9 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun TemplateGrid(
     modifier: Modifier,
     templates: List<PostTemplateDto>,
-    onCardClick: (Long) -> Unit = {}
+    onCardClick: (Long) -> Unit = {},
+    onDownloadClick: (Long) -> Unit = {},
+    onFavoriteClick: (Long) -> Unit = {}
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -35,7 +37,10 @@ fun TemplateGrid(
        items(templates, key = {it.postTemplateId}) { template ->
            PostTemplateCard(
                template = template,
-               modifier = Modifier.clickable{onCardClick(template.postTemplateId)}
+               modifier = Modifier.clickable{onCardClick(template.postTemplateId)},
+               onDownloadClick = onDownloadClick,
+               onFavoriteClick = onFavoriteClick
+
            )
 
        }

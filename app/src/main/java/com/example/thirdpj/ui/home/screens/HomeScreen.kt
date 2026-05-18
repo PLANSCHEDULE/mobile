@@ -83,7 +83,9 @@ fun HomeScreen(
                 }
                 PostTemplateCard(
                     template = templates[index],
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    onDownloadClick = { id -> viewModel.downloadTemplate(id) },
+                    onFavoriteClick = { id -> viewModel.toggleFavorite(id) }
                 )
             }
 

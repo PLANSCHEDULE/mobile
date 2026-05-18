@@ -23,6 +23,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,8 +41,14 @@ import com.example.thirdpj.data.post.dto.PostTemplateDto
 @Composable
 fun PostTemplateCard(
     template: PostTemplateDto,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDownloadClick: (Long) -> Unit = {},
+    onFavoriteClick: (Long) -> Unit = {}
              ) {
+
+    var isFavorite by remember { mutableStateOf(template.isFavorite) }
+    var favoriteCount by remember { mutableIntStateOf(template.favoriteCount) }
+    var downloadCount by remember { mutableIntStateOf(template.downloadCount) }
     Card(
         modifier = modifier
             .padding(4.dp),
@@ -56,6 +67,10 @@ fun PostTemplateCard(
         ) {
             // 다운로드 버튼
             Surface(
+                onClick = {
+                    downloadCount += 1
+                    onDownloadClick(template.postTemplateId)
+                },
                 modifier = Modifier
                     .size(28.dp)
                     .align(Alignment.TopStart),
@@ -66,12 +81,16 @@ fun PostTemplateCard(
                     contentDescription = null,
                     modifier = Modifier.padding(6.dp),
                     tint = Color.DarkGray
-
                 )
             }
 
             // 찜 버튼
             Surface(
+                onClick = {
+                    isFavorite = !isFavorite
+                    favoriteCount = if (isFavorite) favoriteCount + 1 else favoriteCount - 1
+                    onFavoriteClick(template.postTemplateId)
+                },
                 modifier = Modifier
                     .size(28.dp)
                     .align(Alignment.TopEnd),
@@ -79,10 +98,10 @@ fun PostTemplateCard(
                 color = Color.White.copy(alpha = 0.8f)
             ) {
                 Icon(
-                    imageVector = if (template.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = null,
                     modifier = Modifier.padding(6.dp),
-                    tint = if (template.isFavorite) Color(0xFFFF6B6B) else Color.Gray
+                    tint = if (isFavorite) Color(0xFFFF6B6B) else Color.Gray
                 )
             }
 
@@ -171,35 +190,32 @@ fun PostTemplateCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                if (template.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = null,
-                modifier = Modifier
-                    .size(12.dp),
-                tint = if (template.isFavorite) Color(0xFFFF6B6B) else Color.LightGray
+                modifier = Modifier.size(12.dp),
+                tint = if (isFavorite) Color(0xFFFF6B6B) else Color.LightGray
             )
-            // DB연결 시
-            Text(text = template.favoriteCount.toString(),
+            Text(
+                text = favoriteCount.toString(),  // template.favoriteCount → favoriteCount
                 fontSize = 12.sp,
                 modifier = Modifier.padding(6.dp)
             )
 
-            Spacer(modifier = Modifier
-                .width(16.dp)
-            )
+            Spacer(modifier = Modifier.width(16.dp))
 
             Icon(
                 painter = painterResource(id = R.drawable.download),
                 contentDescription = null,
                 modifier = Modifier.padding(6.dp),
                 tint = Color.LightGray
-
             )
-
-            Text(text = template.downloadCount.toString(),
+            Text(
+                text = downloadCount.toString(),  // template.downloadCount → downloadCount
                 fontSize = 12.sp,
                 modifier = Modifier.padding(6.dp)
             )
         }
     }
 }
+
 
