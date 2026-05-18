@@ -18,8 +18,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.thirdpj.ui.mypage.MyPageViewModel
 import com.example.thirdpj.ui.mypage.components.HeartTemplateCard
 import com.example.thirdpj.ui.mypage.components.MyTemplateSection
 import com.example.thirdpj.ui.mypage.components.ProfileHeaderScreen
@@ -29,16 +31,21 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun MyPageScreen(navController: NavController,
                  viewModel: ProfileViewModel,
+                 myPageViewModel: MyPageViewModel = viewModel(),
                  onHeartClick: () -> Unit = {}) {
 
     val profile by viewModel.profile.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val myTemplates by myPageViewModel.myTemplates.collectAsStateWithLifecycle()
 
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.fetchMyProfile()
+            myPageViewModel.fetchMyTemplates(isRefresh = true)
         }
     }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,8 +68,9 @@ fun MyPageScreen(navController: NavController,
 
         MyTemplateSection(
             title = "내 템플릿",
-            count = "3",
-            countColor = Color(0xFFFF5252)
+            count = myTemplates.size.toString(),
+            countColor = Color(0xFFFF5252),
+            templates = myTemplates
         )
 
         Spacer(modifier = Modifier.height(24.dp))

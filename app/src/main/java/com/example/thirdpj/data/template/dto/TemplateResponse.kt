@@ -5,5 +5,5 @@ data class TemplateResponse(
     val title: String,
     val background: String,
     val targetDate: String,
-    val items: List<TemplateItemResponse>  // ✅ items 포함
+    val items: List<TemplateItemResponse>
 )
