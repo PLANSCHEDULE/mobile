@@ -4,21 +4,28 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.thirdpj.data.api.RetrofitClient
+import com.example.thirdpj.data.post.dto.PostTemplateDto
+import com.example.thirdpj.data.post.dto.PostTemplateItem
 import com.example.thirdpj.data.profile.repository.ProfileRepository
 import com.example.thirdpj.data.repository.AuthRepository
 import com.example.thirdpj.ui.allview.screens.TemplateAllViewScreen
@@ -26,9 +33,13 @@ import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.login.LoginViewModel
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.auth.signup.SignUpViewModel
+import com.example.thirdpj.ui.favorite.screens.FavoriteScreen
 import com.example.thirdpj.ui.global.components.BottomBar
+import com.example.thirdpj.ui.global.components.MainAddButton
 import com.example.thirdpj.ui.home.screens.HomeScreen
+import com.example.thirdpj.ui.home.screens.HomeViewModel
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
+import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.testdata.TemplateItemData
@@ -67,8 +78,11 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create")
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view")
 
+                val showFabScreens = listOf("home", "favorite", "mypage")
+
+                val homeViewModel: HomeViewModel = viewModel { HomeViewModel() }
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     // 현재의 경로가 숨김 리스트에 없을 때만 하단바 보여주기
@@ -76,7 +90,24 @@ class MainActivity : ComponentActivity() {
                         if (currentRoute !in hideBottomBarScreens) {
                             BottomBar(navController = navController)
                         }
-                    }
+                    },
+                    floatingActionButton = {
+
+                        if(currentRoute in showFabScreens) {
+                            Box(
+                                modifier = Modifier.offset(y =24.dp)
+                            ) {
+                                MainAddButton ( onClick = {
+                                    navController.navigate("create_plan") {
+                                        launchSingleTop = true
+                                    }
+                                })
+                            }
+                        }
+                    },
+                    floatingActionButtonPosition = FabPosition.Center
+
+
 
                 ) {innerPadding ->
                     NavHost(
@@ -129,31 +160,25 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("home") {
-                            HomeScreen()
-                        }
-
-                        // 찜 화면 연결해야됨
-                        composable("favorite") {
-                            //테스트용 더미 데이터. 나중에 viewmodel로 백엔드와 연결 예정
-                            val dummyList = listOf(
-                                TemplateItemData(1, "일본 당일치기 도쿄", "길동", "@gildong", "1234", "123", listOf("09:00" to "공항", "12:00" to "식사")),
-                                TemplateItemData(2, "제주도 힐링 여행", "철수", "@chulsoo", "500", "50", listOf("10:00" to "제주공항", "14:00" to "카페")),
-                                TemplateItemData(3, "서울 밤도깨비 야시장", "영희", "@younghee", "2.5k", "400", listOf("18:00" to "여의도", "20:00" to "푸드트럭")),
-                                TemplateItemData(4, "속초 만석닭강정 투어", "미애", "@miae", "99", "10", listOf("11:00" to "중앙시장", "15:00" to "속초해변")),
-                                TemplateItemData(5, "전주 한옥마을 정복", "도령", "@doryung", "1.1k", "220", listOf("12:00" to "경기전", "14:00" to "비빔밥")),
-                                TemplateItemData(6, "경주 황리단길 산책", "박사", "@doctor", "880", "150", listOf("10:00" to "첨성대", "13:00" to "십원빵"))
-                            )
-
-                            TemplateAllViewScreen(
-                                title = "찜한 템플릿",
-                                templates = dummyList,
-                                onBackClick = {
-                                    navController.popBackStack()
-                                },
-                                onCardClick = {templateId ->
-                                    // 여기는 상세페이지 이동으로 설정해야됨. 아직 ui 구현 못함..
+                            HomeScreen(
+                                viewModel = homeViewModel,
+                                onBrowseClick = {
+                                    navController.navigate("top10_view")
                                 }
                             )
+                        }
+
+                       composable("favorite"){
+                           FavoriteScreen()
+                       }
+
+                        composable("top10_view") {
+
+                            TemplateAllViewScreen(
+                                title = "이번주 BEST TOP 10",
+                                onBackClick = { navController.popBackStack() }
+                            )
+
                         }
 
 
@@ -162,7 +187,19 @@ class MainActivity : ComponentActivity() {
                         // 같이 연결아직안된 검색은 눌러도 종료는 안되는데 원인 찾아봐야 될 듯
                         composable("mypage") {
                             (
-                                    MyPageScreen(navController = navController)
+                                    MyPageScreen(
+                                        navController = navController,
+                                        viewModel = profileViewModel,
+                                        onHeartClick = {navController.navigate("favorite")})
+                            )
+                        }
+
+                        composable("create_plan"){
+                            CreatePlanScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+
                             )
                         }
 

@@ -37,7 +37,7 @@ fun HomeHeader() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "홍길동",
+                text = "PickPlan",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.Black

@@ -28,7 +28,9 @@ import androidx.compose.ui.unit.sp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun HomeBanner() {
+fun HomeBanner(
+    onBrowseClick: () -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +50,7 @@ fun HomeBanner() {
                 // column을 하나 추가해서 div처럼 나눌 수 있음!
                 Column{
                     Text(
-                        text = "이번주 BEST",
+                        text = "다운로드 BEST 10",
                         color = Color(0xFFF7D070),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
@@ -72,7 +74,7 @@ fun HomeBanner() {
                 // Button으로 만들어야 되려나?
                 // surface가 있음! 여백 설정이 더 간단
                 Surface(
-                    onClick = {},
+                    onClick = onBrowseClick,
                     color = Color(0xFFEF7F61),
                     shape = RoundedCornerShape(50.dp)
                 ) {

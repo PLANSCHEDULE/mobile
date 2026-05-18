@@ -31,14 +31,18 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 //
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreatePlanTopBar() {
+fun CreatePlanTopBar(
+    onBackClick: () -> Unit = {},
+    onSaveClick: () -> Unit = {},
+    onShareClick: () -> Unit = {}
+) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.White
         ),
         // 뒤로 가기 버튼
         navigationIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_back),
                     contentDescription = "뒤로가기",
@@ -59,14 +63,14 @@ fun CreatePlanTopBar() {
         //버튼 영역
         actions = {
             // 저장 버튼
-            TextButton(onClick = {}) {
+            TextButton(onClick = onSaveClick) {
                 Text("저장", color = Color.Black, fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.width(4.dp))
 
             // 공유 버튼
             Button(
-                onClick = {},
+                onClick = onShareClick,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF27A54)),
                 shape = RoundedCornerShape(12.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)

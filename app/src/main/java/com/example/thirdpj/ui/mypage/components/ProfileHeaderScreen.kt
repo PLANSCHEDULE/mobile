@@ -29,7 +29,11 @@ import androidx.compose.ui.unit.sp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun ProfileHeaderScreen() {
+fun ProfileHeaderScreen(
+    nickname: String = "",
+    handle: String = "",
+    bio: String = ""
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +59,7 @@ fun ProfileHeaderScreen() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "가",
+                        text = nickname.take(1),
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFFF8E5E)
@@ -70,7 +74,7 @@ fun ProfileHeaderScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "홍길동",
+                        text = nickname,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -78,7 +82,7 @@ fun ProfileHeaderScreen() {
                 }
                 // 문구
                 Text(
-                    text = "@gildong * 갓생 따라하는 중 ✨",
+                    text = "@$handle * $bio ✨",
                     fontSize = 14.sp,
                     color = Color.White.copy(alpha = 0.9f),
                     modifier = Modifier.padding(top = 4.dp)

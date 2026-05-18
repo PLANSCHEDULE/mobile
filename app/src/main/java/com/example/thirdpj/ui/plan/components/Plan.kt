@@ -1,20 +1,31 @@
 package com.example.thirdpj.ui.plan.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,15 +36,26 @@ import androidx.compose.ui.unit.dp
 import com.example.thirdpj.R
 import com.example.thirdpj.ui.testdata.PlanItem
 import com.example.thirdpj.ui.theme.ThirdPJTheme
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun Plan(item: PlanItem,
-         onCheckedChange: (Boolean) -> Unit,
+         onCheckedChange: ((Boolean) -> Unit)?,
+         onTitleChange: (String) -> Unit,
          onTimeClick: () -> Unit,
-         onDeleteClick: () -> Unit
+         onDeleteClick: () -> Unit,
+         canMoveUp: Boolean,
+         canMoveDown: Boolean,
+         onMoveUp: () -> Unit,
+         onMoveDown: () -> Unit,
+         modifier: Modifier = Modifier,
 ) {
+
+    val  timeFormatter = remember { DateTimeFormatter.ofPattern("HH:mm") }
+
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         color = Color.White,
@@ -46,15 +68,35 @@ fun Plan(item: PlanItem,
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 드래그 아이콘 표시
-            Icon(
-                painter = painterResource(id = R.drawable.drag_indicator),
-                contentDescription = null,
-                tint = Color.Gray,
-                modifier = Modifier.size(24.dp)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                IconButton(
+                    onClick = onMoveUp,
+                    enabled = canMoveUp,
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowUp,
+                        contentDescription = "위로 이동",
+                        tint = if (canMoveUp) Color.Gray else Color.LightGray
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                IconButton(
+                    onClick = onMoveDown,
+                    enabled = canMoveDown,
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = "아래로 이동",
+                        tint = if (canMoveDown) Color.Gray else Color.LightGray
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.width(12.dp))
 
             // 시간
             Surface(
@@ -64,7 +106,7 @@ fun Plan(item: PlanItem,
             ) {
                 // 시간 선택을 어떻게 하면 좋을까, 선택? 시간 선택 컴포넌트를 따로 만들어야 하는 듯
                 Text(
-                    text = item.time,
+                    text = item.time.format(timeFormatter),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.Bold,
                         color = if(item.isDone) Color.LightGray else Color(0xFFF27A54)
@@ -76,21 +118,44 @@ fun Plan(item: PlanItem,
             Spacer(modifier = Modifier.width(8.dp))
 
             // 체크박스
+            // 생각해보니 생성 수정 페이지는 체크 박스가 눌리면 안됨
             Checkbox(
                 checked = item.isDone,
                 onCheckedChange = onCheckedChange,
+                enabled = true,
                 colors = CheckboxDefaults.colors(checkedColor = Color(0xFFF27A54))
             )
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Text(
-                text = item.title,
-                style = MaterialTheme.typography.bodyLarge.copy(
+            // 글자 입력 영역
+            OutlinedTextField(
+                value = item.title,
+                onValueChange = onTitleChange,
+                textStyle = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
                     color = if(item.isDone) Color.LightGray else Color.Black
                 ),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                placeholder = {
+                    Text(
+                        text = "일정 제목 입력",
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = Color.LightGray
+                        )
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    focusedBorderColor = Color(0xFFF27A54),    // 클릭해서 수정 중일 때 주황색 틀
+                    unfocusedBorderColor = Color(0xFFE5E5E5),  // 평소에 보이는 연한 회색 틀
+                    disabledBorderColor = Color(0xFFE5E5E5),
+                    cursorColor = Color(0xFFF27A54)
+                ),
+                singleLine = true
             )
 
             // 삭제 버튼
@@ -112,20 +177,24 @@ fun Plan(item: PlanItem,
 
 @Preview
 @Composable
-fun PlanPreview(
-) {
+fun PlanPreview() {
     ThirdPJTheme {
         val dummyData = PlanItem(
             id = 1,
-            time = "12:00",
+            time = LocalTime.of(12, 0),
             title = "점심 먹기",
             isDone = false
         )
         Plan(
             item = dummyData,
             onCheckedChange = {},
+            onTitleChange = {},
             onTimeClick = {},
-            onDeleteClick = {}
+            onDeleteClick = {},
+            canMoveUp = true,
+            canMoveDown = true,
+            onMoveUp = {},
+            onMoveDown = {}
         )
     }
 }

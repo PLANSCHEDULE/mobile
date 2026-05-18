@@ -83,7 +83,8 @@ fun BottomBar(navController: NavController) {
                         saveState = true
                     }
                     launchSingleTop = true
-                    restoreState = true
+                    restoreState = false
+                    // 이전걸 복원하려해서 홈에서 찜이 false로 날아오는데 true로 표시하는 경우가 생김
                 }
             },
             icon = {Icon(Icons.Default.Person, contentDescription = "마이페이지")},

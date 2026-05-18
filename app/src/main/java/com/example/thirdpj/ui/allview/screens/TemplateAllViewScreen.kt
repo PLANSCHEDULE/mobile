@@ -1,12 +1,24 @@
 package com.example.thirdpj.ui.allview.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.thirdpj.data.post.dto.PostTemplateDto
+import com.example.thirdpj.data.post.dto.PostTemplateItem
 import com.example.thirdpj.ui.allview.components.AllViewTopBar
 import com.example.thirdpj.ui.allview.components.TemplateGrid
 import com.example.thirdpj.ui.testdata.TemplateItemData
@@ -15,10 +27,15 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun TemplateAllViewScreen(
     title: String,
-    templates: List<TemplateItemData>,
     onBackClick: () -> Unit,
-    onCardClick: (Int) -> Unit = {}
+    onCardClick: (Long) -> Unit = {},
+    viewModel: AllViewViewModel = viewModel()
 ) {
+    val templates by viewModel.templates.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchTop10()
+    }
     Scaffold(
         topBar = {
             AllViewTopBar(
@@ -32,36 +49,68 @@ fun TemplateAllViewScreen(
         Column(
             modifier = Modifier.padding(innerPadding)
         ) {
-            TemplateGrid(
-                modifier = Modifier,
-                template = templates,
-                onCardClick = onCardClick
-            )
+            if (templates.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "아직 저장된 템플릿이 없습니다.",
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            } else {
+                TemplateGrid(
+                    modifier = Modifier,
+                    templates = templates,
+                    onCardClick = onCardClick,
+                    onDownloadClick = { id -> viewModel.downloadTemplate(id) },
+                    onFavoriteClick = { id -> viewModel.toggleFavorite(id) }
+
+                )
+            }
         }
 
     }
-    // 음.. 템플릿이 없다면 어떻게 처리해야될 지도 생각해 보야될 듯
 
 
 }
 
-@Preview
-@Composable
-fun TemplateAllViewScreenPreview() {
-    val dummyList = listOf(
-        TemplateItemData(1, "일본 당일치기 도쿄", "길동", "@gildong", "1234", "123", listOf("09:00" to "공항", "12:00" to "식사")),
-        TemplateItemData(2, "제주도 힐링 여행", "철수", "@chulsoo", "500", "50", listOf("10:00" to "제주공항", "14:00" to "카페")),
-        TemplateItemData(3, "서울 밤도깨비 야시장", "영희", "@younghee", "2.5k", "400", listOf("18:00" to "여의도", "20:00" to "푸드트럭")),
-        TemplateItemData(4, "속초 만석닭강정 투어", "미애", "@miae", "99", "10", listOf("11:00" to "중앙시장", "15:00" to "속초해변")),
-        TemplateItemData(5, "전주 한옥마을 정복", "도령", "@doryung", "1.1k", "220", listOf("12:00" to "경기전", "14:00" to "비빔밥")),
-        TemplateItemData(6, "경주 황리단길 산책", "박사", "@doctor", "880", "150", listOf("10:00" to "첨성대", "13:00" to "십원빵"))
-    )
-
-    ThirdPJTheme {
-        TemplateAllViewScreen(
-            title = "찜한 템플릿",
-            templates = dummyList,
-            onBackClick = {}
-        )
-    }
-}
+//@Preview(name = "데이터가 있을 때", showBackground = true)
+//@Composable
+//fun TemplateAllViewScreenPreview() {
+//    val dummyList = listOf(
+//        PostTemplateDto(
+//            postTemplateId = 1L, title = "일본 당일치기 도쿄", background = null, authorHandle = "@gildong",
+//            favoriteCount = 1234, downloadCount = 123, isFavorite = true,
+//            items = listOf(PostTemplateItem("09:00", "공항", 1), PostTemplateItem("12:00", "식사", 2))
+//        ),
+//        PostTemplateDto(
+//            postTemplateId = 2L, title = "제주도 힐링 여행", background = null, authorHandle = "@chulsoo",
+//            favoriteCount = 500, downloadCount = 50, isFavorite = true,
+//            items = listOf(PostTemplateItem("10:00", "제주공항", 1), PostTemplateItem("14:00", "카페", 2))
+//        )
+//    )
+//
+//    ThirdPJTheme {
+//        TemplateAllViewScreen(
+//            title = "찜한 템플릿",
+//            templates = dummyList,
+//            onBackClick = {}
+//        )
+//    }
+//}
+//
+//@Preview(name = "데이터가 없을 때 (텅 비었을 때)", showBackground = true)
+//@Composable
+//fun EmptyTemplateAllViewScreenPreview() {
+//    ThirdPJTheme {
+//        TemplateAllViewScreen(
+//            title = "찜한 템플릿",
+//            templates = emptyList(),
+//            onBackClick = {}
+//        )
+//    }
+//}
