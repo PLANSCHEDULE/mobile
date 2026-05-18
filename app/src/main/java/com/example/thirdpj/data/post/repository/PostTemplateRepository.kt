@@ -11,6 +11,7 @@ class PostTemplateRepository(private val apiService: PostTemplateApiService) {
         return try {
             val response = apiService.getAllTemplates(page = page, size = size)
             val rawBody = response.errorBody()?.string() ?: response.body().toString()
+            Log.d("HOME_RAW", response.body().toString())
             Log.d("API_RAW", rawBody)
             if (response.isSuccessful) {
                 val apiResponse = response.body()
@@ -58,6 +59,23 @@ class PostTemplateRepository(private val apiService: PostTemplateApiService) {
                 Result.success(Unit)
             } else {
                 Result.failure(Exception("찜 토글 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getMyFavorites(page: Int, size: Int): Result<SliceResponse<PostTemplateDto>> {
+        return try {
+            val response = apiService.getMyFavorites(page = page, size = size)
+            Log.d("FAVORITE_RAW", response.code().toString())
+            Log.d("FAVORITE_RAW", response.errorBody()?.string() ?: "no error body")
+            if (response.isSuccessful) {
+                val data = response.body()?.data
+                    ?: return Result.failure(Exception("응답 데이터가 없습니다."))
+                Result.success(data)
+            } else {
+                Result.failure(Exception("찜 목록 조회 실패 코드: ${response.code()}"))
             }
         } catch (e: Exception) {
             Result.failure(e)

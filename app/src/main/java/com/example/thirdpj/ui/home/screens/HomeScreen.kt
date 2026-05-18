@@ -1,5 +1,6 @@
 package com.example.thirdpj.ui.home.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ fun HomeScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED){
+            Log.d("HOME_REFRESH", "새로고침 호출됨") // 찜이 잘 안되서 확인하기 위한 log
             viewModel.fetchTemplates(isRefresh = true)
         }
     }

@@ -33,6 +33,7 @@ import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.login.LoginViewModel
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.auth.signup.SignUpViewModel
+import com.example.thirdpj.ui.favorite.screens.FavoriteScreen
 import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.global.components.MainAddButton
 import com.example.thirdpj.ui.home.screens.HomeScreen
@@ -167,36 +168,9 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        // 찜 화면 연결해야됨
-//                        composable("favorite") {
-//                            //테스트용 더미 데이터. 나중에 viewmodel로 백엔드와 연결 예정
-//                            val dummyList = listOf(
-//                                PostTemplateDto(
-//                                    postTemplateId = 1L, title = "일본 당일치기 도쿄", background = null,
-//                                    authorHandle = "@gildong", favoriteCount = 1234, downloadCount = 123, isFavorite = true,
-//                                    items = listOf(PostTemplateItem("09:00", "공항", 1), PostTemplateItem("12:00", "식사", 2))
-//                                ),
-//                                PostTemplateDto(
-//                                    postTemplateId = 2L,
-//                                    title = "제주도 힐링 여행",
-//                                    background = null,
-//                                    authorHandle = "@chulsoo",
-//                                    favoriteCount = 500,
-//                                    downloadCount = 50,
-//                                    isFavorite = false,
-//                                    items = listOf(
-//                                        PostTemplateItem("10:00", "제주공항", 1),
-//                                        PostTemplateItem("14:00", "카페", 2)
-//                                    )
-//                                )
-//                            )
-//                            TemplateAllViewScreen(
-//                                title = "찜한 템플릿",
-//                                templates = dummyList,
-//                                onBackClick = { navController.popBackStack() },
-//                                onCardClick = { templateId -> }
-//                            )
-//                        }
+                       composable("favorite"){
+                           FavoriteScreen()
+                       }
 
                         composable("top10_view") {
 

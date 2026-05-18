@@ -46,9 +46,9 @@ fun PostTemplateCard(
     onFavoriteClick: (Long) -> Unit = {}
              ) {
 
-    var isFavorite by remember { mutableStateOf(template.isFavorite) }
-    var favoriteCount by remember { mutableIntStateOf(template.favoriteCount) }
-    var downloadCount by remember { mutableIntStateOf(template.downloadCount) }
+    var isFavorite by remember(template.isFavorite) { mutableStateOf(template.isFavorite) }
+    var favoriteCount by remember(template.favoriteCount) { mutableIntStateOf(template.favoriteCount) }
+    var downloadCount by remember(template.downloadCount) { mutableIntStateOf(template.downloadCount) }
     Card(
         modifier = modifier
             .padding(4.dp),

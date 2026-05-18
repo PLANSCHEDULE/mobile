@@ -31,4 +31,10 @@ interface PostTemplateApiService {
     suspend fun toggleFavorite(
         @Path("postTemplateId") postTemplateId: Long
     ) : Response<ApiResponse<Unit>>
+
+    @GET("api/favorites/me")
+    suspend fun getMyFavorites(
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 10
+    ) : Response<ApiResponse<SliceResponse<PostTemplateDto>>>
 }

@@ -1,4 +1,4 @@
-package com.example.thirdpj.ui.home.screens
+package com.example.thirdpj.ui.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class FavoriteViewModel : ViewModel() {
     private val repository = PostTemplateRepository(RetrofitClient.postTemplateApiService)
 
     private val _templates = MutableStateFlow<List<PostTemplateDto>>(emptyList())
@@ -22,7 +22,7 @@ class HomeViewModel : ViewModel() {
     private var currentPage = 0
     private var isLastPage = false
 
-    fun fetchTemplates(isRefresh: Boolean = false) {
+    fun fetchMyFavorites(isRefresh: Boolean = false) {
         if (_isLoading.value || (!isRefresh && isLastPage)) return
 
         if (isRefresh) {
@@ -32,7 +32,7 @@ class HomeViewModel : ViewModel() {
 
         viewModelScope.launch {
             _isLoading.value = true
-            repository.getAllTemplates(page = currentPage, size = 10)
+            repository.getMyFavorites(page = currentPage, size = 10)
                 .onSuccess { slice ->
                     _templates.value = if (isRefresh) slice.content
                     else _templates.value + slice.content
@@ -41,16 +41,6 @@ class HomeViewModel : ViewModel() {
                 }
                 .onFailure { it.printStackTrace() }
             _isLoading.value = false
-        }
-    }
-    private val _top10Templates = MutableStateFlow<List<PostTemplateDto>>(emptyList())
-    val top10Templates: StateFlow<List<PostTemplateDto>> = _top10Templates.asStateFlow()
-
-    fun fetchTop10() {
-        viewModelScope.launch {
-            repository.getTop10Templates()
-                .onSuccess { _top10Templates.value = it }
-                .onFailure { it.printStackTrace() }
         }
     }
 
@@ -65,16 +55,8 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             repository.toggleFavorite(postTemplateId)
                 .onSuccess {
-                    _templates.value = _templates.value.map { template ->
-                        if (template.postTemplateId == postTemplateId) {
-                            template.copy(
-                                isFavorite = !template.isFavorite,
-                                favoriteCount = if (template.isFavorite)
-                                    template.favoriteCount - 1
-                                else
-                                    template.favoriteCount + 1
-                            )
-                        } else template
+                    _templates.value = _templates.value.filter {
+                        it.postTemplateId != postTemplateId
                     }
                 }
                 .onFailure { it.printStackTrace() }
