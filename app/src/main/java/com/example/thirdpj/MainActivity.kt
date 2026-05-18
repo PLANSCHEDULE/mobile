@@ -40,7 +40,10 @@ import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.home.screens.HomeViewModel
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
+import com.example.thirdpj.ui.plan.detail.TemplateDetailViewModel
 import com.example.thirdpj.ui.plan.detail.screen.TemplateDetailScreen
+import com.example.thirdpj.ui.plan.edit.EditPlanViewModel
+import com.example.thirdpj.ui.plan.edit.screens.EditPlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.testdata.TemplateItemData
@@ -79,7 +82,7 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}")
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}" )
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
 
@@ -211,6 +214,32 @@ class MainActivity : ComponentActivity() {
                             val templateId = backStackEntry.arguments?.getString("templateId")?.toLong() ?: return@composable
                             TemplateDetailScreen(
                                 templateId = templateId,
+                                onBackClick = { navController.popBackStack() },
+                                onEditClick = { id -> navController.navigate("template_edit/$id") }
+                            )
+                        }
+
+
+                        composable("template_edit/{templateId}") { backStackEntry ->
+                            val templateId = backStackEntry.arguments?.getString("templateId")?.toLong()
+                                ?: return@composable
+
+                            //  수정 화면에서 다시 상세 조회해서 초기화
+                            val editViewModel: EditPlanViewModel = viewModel()
+                            val detailViewModel: TemplateDetailViewModel = viewModel()
+                            val template by detailViewModel.template.collectAsStateWithLifecycle()
+
+                            LaunchedEffect(templateId) {
+                                detailViewModel.fetchTemplateDetail(templateId)
+                            }
+
+                            LaunchedEffect(template) {
+                                template?.let { editViewModel.initWithTemplate(it) }
+                            }
+
+                            EditPlanScreen(
+                                templateId = templateId,
+                                initialTemplate = template ?: return@composable,
                                 onBackClick = { navController.popBackStack() }
                             )
                         }
