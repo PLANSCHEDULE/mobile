@@ -28,7 +28,8 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
 fun MyPageScreen(navController: NavController,
-                 viewModel: ProfileViewModel) {
+                 viewModel: ProfileViewModel,
+                 onHeartClick: () -> Unit = {}) {
 
     val profile by viewModel.profile.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -52,7 +53,9 @@ fun MyPageScreen(navController: NavController,
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        HeartTemplateCard()
+        HeartTemplateCard(
+            onClick = onHeartClick
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
 

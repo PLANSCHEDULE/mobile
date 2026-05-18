@@ -189,7 +189,8 @@ class MainActivity : ComponentActivity() {
                             (
                                     MyPageScreen(
                                         navController = navController,
-                                        viewModel = profileViewModel)
+                                        viewModel = profileViewModel,
+                                        onHeartClick = {navController.navigate("favorite")})
                             )
                         }
 
