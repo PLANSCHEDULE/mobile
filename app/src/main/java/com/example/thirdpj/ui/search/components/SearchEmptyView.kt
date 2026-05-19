@@ -29,7 +29,7 @@ fun SearchEmptyView(
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = if (isSearched) "검색 결과가 없습니다." else "검색어를 입력해주세요.",
-                color = Color.Gray,
+                color = Color(0xFFAFA9EC),
                 fontSize = 14.sp
             )
         }

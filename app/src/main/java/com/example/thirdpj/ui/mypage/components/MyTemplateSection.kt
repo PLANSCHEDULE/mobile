@@ -61,13 +61,14 @@ fun MyTemplateSection(
                     }
                 },
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF534AB7)
             )
 
             Text(
                 text = "전체보기 >",
                 fontSize = 13.sp,
-                color = Color.Gray,
+                color = Color(0xFF7F77DD),
                 modifier = Modifier.clickable{
 
                 }
@@ -86,7 +87,7 @@ fun MyTemplateSection(
             ) {
                 Text(
                     text = "아직 템플릿이 없습니다.",
-                    color = Color.Gray,
+                    color = Color(0xFFAFA9EC),
                     fontSize = 13.sp
                 )
             }

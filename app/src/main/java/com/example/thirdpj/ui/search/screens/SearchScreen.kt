@@ -28,7 +28,7 @@ fun SearchScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF9F5F0))
+            .background(Color(0xFFF5F3FF))
     ) {
         SearchBar(
             keyword = viewModel.keyword,
@@ -39,7 +39,7 @@ fun SearchScreen(
         when {
             isLoading && results.isEmpty() -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = Color(0xFFEF7F61))
+                    CircularProgressIndicator(color = Color(0xFF7F77DD))
                 }
             }
 
