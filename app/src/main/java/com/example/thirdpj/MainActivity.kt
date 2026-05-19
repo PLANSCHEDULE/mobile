@@ -5,19 +5,15 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,8 +22,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.thirdpj.data.api.RetrofitClient
-import com.example.thirdpj.data.post.dto.PostTemplateDto
-import com.example.thirdpj.data.post.dto.PostTemplateItem
 import com.example.thirdpj.data.profile.repository.ProfileRepository
 import com.example.thirdpj.data.repository.AuthRepository
 import com.example.thirdpj.ui.allview.screens.TemplateAllViewScreen
@@ -51,7 +45,6 @@ import com.example.thirdpj.ui.plan.edit.screens.EditPlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.search.screens.SearchScreen
-import com.example.thirdpj.ui.testdata.TemplateItemData
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import com.example.thirdpj.util.TokenManager
 
@@ -218,6 +211,10 @@ class MainActivity : ComponentActivity() {
                                         onHeartClick = {navController.navigate("favorite")},
                                         onTemplateClick = { id -> navController.navigate("template_detail/$id") },
                                         onLogoutClick = {
+                                            // reset처리해줘야 제대로 로그아웃 처리됨
+                                            loginViewModel.resetState()
+                                            signUpViewModel.resetState()
+
                                             myPageViewModel.logout(
                                                 onSuccess = {
                                                     navController.navigate("login") {

@@ -88,7 +88,7 @@ fun ProfileForm(
             placeholder = {Text("자신을 소개해 주세요(선택사항)")},
             supportingText = {
                 Text(
-                    text = "${bio.length}/150",
+                    text = "${bio.length}/100",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End
                 )
