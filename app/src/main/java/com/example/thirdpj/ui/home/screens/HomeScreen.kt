@@ -2,7 +2,6 @@ package com.example.thirdpj.ui.home.screens
 
 import android.util.Log
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -60,7 +59,7 @@ fun HomeScreen(
         // 하단 바 수정하면서 navigate 설정해 주면서 오류남
         // MainActivity에서 구현함으로써 homescreen에서는 삭제
         // 근데 mainActivity에서 설정을 해두었음
-        containerColor = Color.White
+        containerColor = Color(0xFFF5F3FF)
     ) {innerPadding ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -77,7 +76,8 @@ fun HomeScreen(
                     Text(
                         text = "공유된 템플릿",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
+                        fontSize = 18.sp,
+                        color = Color(0xFF534AB7)
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
