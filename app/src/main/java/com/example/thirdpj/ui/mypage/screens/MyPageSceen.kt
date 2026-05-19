@@ -57,7 +57,7 @@ fun MyPageScreen(navController: NavController,
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .background(Color(0xFFFDF9F6))
+            .background(Color(0xFFF5F3FF))
     ) {
         ProfileHeaderScreen(
             nickname = profile?.nickname ?: "",
@@ -78,7 +78,7 @@ fun MyPageScreen(navController: NavController,
         MyTemplateSection(
             title = "내 템플릿",
             count = myTemplates.size.toString(),
-            countColor = Color(0xFFFF5252),
+            countColor = Color(0xFF534AB7),
             templates = myTemplates,
             onCardClick = { id -> onTemplateClick(id) }
         )
@@ -88,7 +88,7 @@ fun MyPageScreen(navController: NavController,
         MyTemplateSection(
             title = "포크한 템플릿",
             count = downloadedTemplates.size.toString(),
-            countColor = Color(0xFF4A90E2),
+            countColor = Color(0xFF7F77DD),
             templates = downloadedTemplates,
             onCardClick = { id -> onTemplateClick(id) }
         )
