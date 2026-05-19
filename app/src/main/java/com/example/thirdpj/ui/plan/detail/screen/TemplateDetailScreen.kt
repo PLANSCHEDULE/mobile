@@ -80,7 +80,7 @@ fun TemplateDetailScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = Color(0xFFEF7F61))
+                CircularProgressIndicator(color = Color(0xFF7F77DD))
             }
         } else {
             LazyColumn(
@@ -94,32 +94,34 @@ fun TemplateDetailScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0xFFFFFBF5))
+                            .background(Color(0xFFF5F3FF))
                             .padding(vertical = 24.dp)
                     ) {
                         Text(
                             text = template!!.title,
                             style = MaterialTheme.typography.headlineMedium.copy(
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF534AB7)
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .background(Color(0xFFF8F0E5), RoundedCornerShape(8.dp))
+                                .background(Color(0xFFEEECFB), RoundedCornerShape(8.dp))
                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.DateRange,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp),
-                                tint = Color(0xFFF27A54)
+                                tint = Color(0xFF7F77DD)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = template!!.targetDate,
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color(0xFF534AB7)
                             )
                         }
                     }

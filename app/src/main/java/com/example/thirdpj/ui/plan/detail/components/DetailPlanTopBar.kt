@@ -32,24 +32,25 @@ fun DetailPlanTopBar(
 
 ) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFF5F3FF)),
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_back),
-                    contentDescription = "뒤로가기"
+                    contentDescription = "뒤로가기",
+                    tint = Color(0xFF534AB7)
                 )
             }
         },
         title = {},
         actions = {
             TextButton(onClick = onEditClick) {
-                Text("수정", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text("수정", color = Color(0xFF534AB7), fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.width(4.dp))
             Button(
                 onClick = onDeleteClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF5252)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE24B4A)),
                 shape = RoundedCornerShape(12.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
             ) {

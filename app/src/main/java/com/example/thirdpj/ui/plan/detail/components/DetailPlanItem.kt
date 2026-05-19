@@ -30,7 +30,7 @@ fun DetailPlanItem(
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         color = Color.White,
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         shadowElevation = 2.dp
     ) {
         Row(
@@ -41,14 +41,14 @@ fun DetailPlanItem(
         ) {
             // 시간
             Surface(
-                color = Color(0xFFFFF7F0),
+                color = Color(0xFFEEECFB),
                 shape = RoundedCornerShape(4.dp)
             ) {
                 Text(
                     text = itemTime,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if (isCompleted) Color.LightGray else Color(0xFFF27A54)
+                        color = if (isCompleted) Color.LightGray else Color(0xFF7F77DD)
                     ),
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp)
                 )
@@ -60,7 +60,7 @@ fun DetailPlanItem(
             Checkbox(
                 checked = isCompleted,
                 onCheckedChange = null,
-                colors = CheckboxDefaults.colors(checkedColor = Color(0xFFF27A54))
+                colors = CheckboxDefaults.colors(checkedColor = Color(0xFF7F77DD))
             )
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -70,7 +70,7 @@ fun DetailPlanItem(
                 text = content,
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    color = if (isCompleted) Color.LightGray else Color.Black
+                    color = if (isCompleted) Color.LightGray else Color(0xFF534AB7)
                 ),
                 modifier = Modifier.weight(1f)
             )
