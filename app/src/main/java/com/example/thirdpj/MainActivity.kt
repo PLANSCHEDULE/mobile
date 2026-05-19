@@ -141,6 +141,7 @@ class MainActivity : ComponentActivity() {
                                 viewModel = signUpViewModel,
                                 onBack = {navController.popBackStack()},
                                 onSignUpSuccess = {
+                                    profileViewModel.resetState()
                                     navController.navigate("profile_create") {
                                         popUpTo("signup") {inclusive = true}
                                     }

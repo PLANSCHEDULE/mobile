@@ -9,6 +9,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,14 +32,17 @@ fun ProfileTopBar(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF534AB7)
             )
         },
         navigationIcon = {
             if(showBackButton) {
                 IconButton(onClick = onBackClick) {
                     Icon(painter = painterResource(id = R.drawable.arrow_back),
-                        contentDescription = "뒤로가기")
+                        contentDescription = "뒤로가기",
+                        tint = Color(0xFF534AB7)
+                    )
                 }
             }
         },
@@ -51,16 +55,14 @@ fun ProfileTopBar(
                     text = actionText,
                     style = MaterialTheme.typography.labelLarge,
                     // MaterialTheme.colorSchema를 통해서 활성화 상태에 따라 색상 강조가 가능!
-                    color = if (isActionEnabled) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.outline
-                    }
+                    fontWeight = FontWeight.Bold,
+                    color = if (isActionEnabled) Color(0xFF7F77DD)
+                    else Color(0xFFCECBF6)
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = Color(0xFFF5F3FF)
         )
     )
 
