@@ -41,8 +41,8 @@ fun HeartTemplateCard(
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 8.dp)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F3FF)),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -56,7 +56,7 @@ fun HeartTemplateCard(
                 modifier = Modifier
                     .size(56.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFFFF8EAC)),
+                    .background(Color(0xFF7F77DD)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -79,13 +79,13 @@ fun HeartTemplateCard(
                     text = buildAnnotatedString {
                         append("하트 누른 템플릿 ")
                         //오 이렇게 적용하니까 디자인이랑 거의 비슷하게 됨
-                        withStyle(style = SpanStyle(color = Color.Red, fontWeight = FontWeight.Bold)) {
+                        withStyle(style = SpanStyle(color = Color(0xFF534AB7), fontWeight = FontWeight.Bold)) {
                             append("32")
                         }
                     },
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = Color(0xFF534AB7)
                 )
 
                 Spacer(modifier = Modifier.height(2.dp))
@@ -94,7 +94,7 @@ fun HeartTemplateCard(
                 Text(
                     text = "찜한 일정 모아보기",
                     fontWeight = FontWeight.Bold,
-                    color = Color.Gray
+                    color = Color(0xFF7F77DD)
                 )
             }
 
@@ -102,7 +102,7 @@ fun HeartTemplateCard(
             Icon(
                 painter = painterResource(id = R.drawable.chevron_right),
                 contentDescription = null,
-                tint = Color.Gray,
+                tint = Color(0xFFAFA9EC),
                 modifier = Modifier.size(24.dp)
             )
         }
