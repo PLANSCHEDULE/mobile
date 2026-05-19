@@ -1,6 +1,6 @@
 package com.example.thirdpj.data.template.api
 
-import com.example.thirdpj.data.model.GlobalDto.ApiResponse
+import com.example.thirdpj.data.model.globaldto.ApiResponse
 import com.example.thirdpj.data.post.dto.PostTemplateDto
 import com.example.thirdpj.data.post.dto.SliceResponse
 import com.example.thirdpj.data.template.dto.TemplateCreateRequest

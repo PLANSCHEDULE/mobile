@@ -1,13 +1,12 @@
 package com.example.thirdpj.data.api
 
-import com.example.thirdpj.data.model.GlobalDto.ApiResponse
+import com.example.thirdpj.data.model.globaldto.ApiResponse
 import com.example.thirdpj.data.auth.dto.LoginRequest
 import com.example.thirdpj.data.auth.dto.LoginResponse
 import com.example.thirdpj.data.auth.dto.RefreshRequest
 import com.example.thirdpj.data.auth.dto.SignUpRequest
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
