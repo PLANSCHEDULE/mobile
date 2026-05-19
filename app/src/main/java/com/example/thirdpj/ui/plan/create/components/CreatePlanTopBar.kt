@@ -38,7 +38,7 @@ fun CreatePlanTopBar(
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White
+            containerColor = Color(0xFFF5F3FF)
         ),
         // 뒤로 가기 버튼
         navigationIcon = {
@@ -46,6 +46,7 @@ fun CreatePlanTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_back),
                     contentDescription = "뒤로가기",
+                    tint = Color(0xFF534AB7)
                 )
             }
         },
@@ -57,21 +58,22 @@ fun CreatePlanTopBar(
                 Text("✏️ ", fontSize = 14.sp)
                 Text("작성 중",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFFF27A54))
+                    color = Color(0xFF7F77DD)
+                )
             }
         },
         //버튼 영역
         actions = {
             // 저장 버튼
             TextButton(onClick = onSaveClick) {
-                Text("저장", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text("저장", color = Color(0xFF534AB7), fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.width(4.dp))
 
             // 공유 버튼
             Button(
                 onClick = onShareClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF27A54)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD)),
                 shape = RoundedCornerShape(12.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
             ) {

@@ -106,8 +106,9 @@ fun CreatePlanScreen(
 
 
 
-                )
-        }
+            )
+        },
+        containerColor = Color(0xFFF5F3FF)
 
     ) {innerPadding ->
         Column(
