@@ -1,4 +1,4 @@
-package com.example.thirdpj.data.model.globaldto
+package com.example.thirdpj.data.model
 
 data class ErrorResponse(
     val status: Int,

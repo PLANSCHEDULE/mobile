@@ -66,6 +66,10 @@ fun SignUpScreen(viewModel: SignUpViewModel,
             onSignUpSuccess()
         }
     }
+    // 이거 안하면 에러 메시지 계속 떠있음
+    LaunchedEffect(Unit) {
+        viewModel.resetState()
+    }
     // 상단바, Scaffold
     Scaffold(
         // 화면 상단바를 만들기 위해서 Scaffold의 Topbar 사용
