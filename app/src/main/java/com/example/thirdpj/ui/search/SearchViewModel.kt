@@ -25,11 +25,17 @@ class SearchViewModel : ViewModel() {
     var keyword by mutableStateOf("")
         private set
 
+    var isSearched by mutableStateOf(false)
+        private set
     private var currentPage = 0
     private var isLastPage = false
 
     fun onKeywordChange(newKeyword: String) {
         keyword = newKeyword
+        if(newKeyword.isBlank()) {
+            isSearched = false
+            _results.value = emptyList()
+        }
     }
 
     fun search(isRefresh: Boolean = false) {
@@ -46,6 +52,7 @@ class SearchViewModel : ViewModel() {
 
         viewModelScope.launch {
             _isLoading.value = true
+            isSearched = true
             repository.searchTemplates(keyword = keyword, page = currentPage, size = 10)
                 .onSuccess { slice ->
                     _results.value = if (isRefresh) slice.content

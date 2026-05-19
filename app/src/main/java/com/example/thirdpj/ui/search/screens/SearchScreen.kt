@@ -42,8 +42,13 @@ fun SearchScreen(
                     CircularProgressIndicator(color = Color(0xFFEF7F61))
                 }
             }
-            results.isEmpty() -> {
-                SearchEmptyView(isSearched = viewModel.keyword.isNotBlank())
+
+            viewModel.isSearched && results.isEmpty() -> {
+                SearchEmptyView(isSearched = true)
+            }
+
+            !viewModel.isSearched -> {
+                SearchEmptyView(isSearched = false)
             }
             else -> {
                 SearchResultGrid(
