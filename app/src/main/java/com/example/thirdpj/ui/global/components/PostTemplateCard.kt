@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import com.example.thirdpj.R
 import com.example.thirdpj.data.post.dto.PostTemplateDto
 
@@ -70,7 +71,13 @@ fun PostTemplateCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp)
-                .background(Color(0xFFFFB380))
+                .background(
+                    try {
+                        Color(template.background?.toColorInt() ?: 0xFFFFB380.toInt())
+                    } catch (e: Exception) {
+                        Color(0xFFFFB380)
+                    }
+                )
                 .padding(10.dp)
         ) {
             // 다운로드 버튼
@@ -143,7 +150,7 @@ fun PostTemplateCard(
                 Surface(
                     modifier = Modifier.size(18.dp),
                     shape = CircleShape,
-                    color = Color(0xFFB39DDB)
+                    color = Color(0xFFAFA9EC)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         val initial = template.authorHandle.replace("@", "").take(1).uppercase()
@@ -206,7 +213,7 @@ fun PostTemplateCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFFAFAFA))
+                .background(Color(0xFFF5F3FF))
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -228,7 +235,7 @@ fun PostTemplateCard(
                 painter = painterResource(id = R.drawable.download),
                 contentDescription = null,
                 modifier = Modifier.padding(6.dp),
-                tint = Color.LightGray
+                tint = Color(0xFFAFA9EC)
             )
             Text(
                 text = downloadCount.toString(),  // template.downloadCount → downloadCount
