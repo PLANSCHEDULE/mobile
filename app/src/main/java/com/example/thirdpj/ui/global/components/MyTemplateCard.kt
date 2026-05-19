@@ -50,7 +50,7 @@ fun MyTemplateCard(
                 .height(100.dp)
                 .background(
                     try {
-                        Color(template.background.toColorInt())
+                        Color(template.background?.toColorInt() ?: 0xFFFFB380.toInt())
                     } catch (e: Exception) {
                         Color(0xFFFFB380)
                     }
