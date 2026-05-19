@@ -49,6 +49,7 @@ import com.example.thirdpj.ui.plan.edit.EditPlanViewModel
 import com.example.thirdpj.ui.plan.edit.screens.EditPlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
+import com.example.thirdpj.ui.search.screens.SearchScreen
 import com.example.thirdpj.ui.testdata.TemplateItemData
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import com.example.thirdpj.util.TokenManager
@@ -179,6 +180,9 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onCardClick = {
                                     id -> navController.navigate("post_template_detail/$id")
+                                },
+                                onSearchClick = {
+                                    navController.navigate("search")
                                 }
 
                             )
@@ -278,6 +282,15 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = { navController.popBackStack() }
                             )
                         }
+
+                        composable("search") {
+                            SearchScreen(
+                                onCardClick = { id -> navController.navigate("post_template_detail/$id") }
+                            )
+                        }
+
+
+
 
 
 

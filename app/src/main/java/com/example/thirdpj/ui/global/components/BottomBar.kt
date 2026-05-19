@@ -41,7 +41,7 @@ fun BottomBar(navController: NavController) {
                         saveState = true
                     }
                     launchSingleTop = true
-                    restoreState = true
+                    restoreState = false
                 }
             },
             icon = { Icon(Icons.Default.Home, contentDescription = "홈") },
@@ -51,8 +51,16 @@ fun BottomBar(navController: NavController) {
         // 탐색
         // 음 탐색 기능 대신 전체적인 템플릿을 볼 수 있는 메뉴여도 괜찮을 듯
         NavigationBarItem(
-            selected = false,
-            onClick = {},
+            selected = currentRoute == "search",
+            onClick = {
+                navController.navigate("search") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = false
+                }
+            },
             icon = {Icon(Icons.Default.Search, contentDescription = "검색")},
             label = {Text("탐색")}
         )
@@ -66,7 +74,7 @@ fun BottomBar(navController: NavController) {
                         saveState = true
                     }
                     launchSingleTop = true
-                    restoreState = true
+                    restoreState = false
 
                 }
 

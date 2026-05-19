@@ -40,6 +40,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun HomeScreen(
     onBrowseClick: () -> Unit = {},
     onCardClick: (Long) -> Unit = {},
+    onSearchClick: () -> Unit = {},
     viewModel: HomeViewModel = viewModel{ HomeViewModel() }
 ) {
     val templates by viewModel.templates.collectAsStateWithLifecycle()
@@ -54,7 +55,7 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            HomeHeader()
+            HomeHeader(onSearchClick = onSearchClick)
         },
         // 하단 바 수정하면서 navigate 설정해 주면서 오류남
         // MainActivity에서 구현함으로써 homescreen에서는 삭제

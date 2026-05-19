@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -48,7 +48,7 @@ fun SearchBar(
                 unfocusedBorderColor = Color(0xFFE5E5E5),
                 cursorColor = Color(0xFFEF7F61)
             ),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.name),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = { onSearch() }),
             trailingIcon = {
                 IconButton(onClick = onSearch) {

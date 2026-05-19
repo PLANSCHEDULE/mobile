@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 
 @Composable
-fun HomeHeader() {
+fun HomeHeader(
+    onSearchClick: () -> Unit = {}
+) {
     // 파일 구조를 어떻게 잡아야되지
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -45,7 +47,7 @@ fun HomeHeader() {
 
             // 검색 아이콘
             IconButton(
-                onClick = {}
+                onClick = onSearchClick
             ) {
                 Icon(
                     imageVector = Icons.Default.Search,
