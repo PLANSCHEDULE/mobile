@@ -42,4 +42,11 @@ interface PostTemplateApiService {
     suspend fun getPostTemplateDetail(
         @Path("postTemplateId") postTemplateId: Long
     ): Response<ApiResponse<PostTemplateDto>>
+
+    @GET("api/posts/search")
+    suspend fun searchTemplates(
+        @Query("keyword") keyword: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 10
+    ): Response<ApiResponse<SliceResponse<PostTemplateDto>>>
 }
