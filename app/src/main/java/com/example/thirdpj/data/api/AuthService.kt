@@ -7,6 +7,7 @@ import com.example.thirdpj.data.auth.dto.RefreshRequest
 import com.example.thirdpj.data.auth.dto.SignUpRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
@@ -24,4 +25,6 @@ interface AuthService {
         @Body request: RefreshRequest
     ): Response<ApiResponse<LoginResponse>>
 
+    @POST("api/auth/logout")
+    suspend fun logout(): Response<ApiResponse<Unit>>
 }

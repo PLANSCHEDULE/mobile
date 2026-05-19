@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +33,8 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun ProfileHeaderScreen(
     nickname: String = "",
     handle: String = "",
-    bio: String = ""
+    bio: String = "",
+    onLogoutClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -45,6 +47,17 @@ fun ProfileHeaderScreen(
                 .background(Color.Gray)
                 .padding(horizontal = 24.dp)
         ) {
+            // 로그아웃 버튼 추가
+            TextButton(
+                onClick = onLogoutClick,
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Text(
+                    text = "로그아웃",
+                    color = Color.White.copy(alpha = 0.8f),
+                    fontSize = 12.sp
+                )
+            }
             Column(
                 modifier = Modifier
                     .padding(top = 40.dp, bottom = 60.dp)

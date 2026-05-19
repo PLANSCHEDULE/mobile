@@ -19,4 +19,17 @@ class AuthRepository(private val authService: AuthService) {
     suspend fun signUp(signUpRequest: SignUpRequest): Response<ApiResponse<LoginResponse>> {
         return authService.signUp(signUpRequest)
     }
+
+    suspend fun logout(): Result<Unit> {
+        return try {
+            val response = authService.logout()
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("로그아웃 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
