@@ -1,5 +1,6 @@
 package com.example.thirdpj.ui.mypage.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +35,8 @@ fun ProfileHeaderScreen(
     nickname: String = "",
     handle: String = "",
     bio: String = "",
-    onLogoutClick: () -> Unit = {}
+    onLogoutClick: () -> Unit = {},
+    onEditProfileClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -47,17 +49,32 @@ fun ProfileHeaderScreen(
                 .background(Color.Gray)
                 .padding(horizontal = 24.dp)
         ) {
-            // 로그아웃 버튼 추가
-            TextButton(
-                onClick = onLogoutClick,
+            Row(
                 modifier = Modifier.align(Alignment.TopEnd)
             ) {
-                Text(
-                    text = "로그아웃",
-                    color = Color.White.copy(alpha = 0.8f),
-                    fontSize = 12.sp
-                )
+                // 프로필 수정 버튼
+                TextButton(onClick = {
+                    Log.d("PROFILE_EDIT", "ProfileHeaderScreen 버튼 클릭됨")
+                    onEditProfileClick()
+                }) {
+                    Text(
+                        text = "프로필 수정",
+                        color = Color.White.copy(alpha = 0.8f),
+                        fontSize = 12.sp
+                    )
+                }
+                // 로그아웃 버튼 추가
+                TextButton(
+                    onClick = onLogoutClick
+                ) {
+                    Text(
+                        text = "로그아웃",
+                        color = Color.White.copy(alpha = 0.8f),
+                        fontSize = 12.sp
+                    )
+                }
             }
+
             Column(
                 modifier = Modifier
                     .padding(top = 40.dp, bottom = 60.dp)

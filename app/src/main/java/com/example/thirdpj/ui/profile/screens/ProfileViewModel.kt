@@ -41,4 +41,21 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         }
     }
 
+    // 프로필 수정
+    fun updateProfile(nickname: String, bio: String) {
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+            repository.updateProfile(nickname, bio)
+                .onSuccess {
+                    _profile.value = it
+                    _uiState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _uiState.value = UiState.Error(it.message ?: "프로필 수정 중 오류가 발생했습니다.")
+                }
+        }
+    }
+
+
+
 }

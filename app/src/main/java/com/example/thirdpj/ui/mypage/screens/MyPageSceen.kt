@@ -34,7 +34,9 @@ fun MyPageScreen(navController: NavController,
                  myPageViewModel: MyPageViewModel = viewModel(),
                  onHeartClick: () -> Unit = {},
                  onTemplateClick:(Long) -> Unit = {},
-                 onLogoutClick: () -> Unit = {}) {
+                 onLogoutClick: () -> Unit = {},
+                 onEditProfileClick: () -> Unit = {}
+) {
 
     val profile by viewModel.profile.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -61,7 +63,8 @@ fun MyPageScreen(navController: NavController,
             nickname = profile?.nickname ?: "",
             handle = profile?.handle ?: "",
             bio = profile?.bio ?: "",
-            onLogoutClick = onLogoutClick
+            onLogoutClick = onLogoutClick,
+            onEditProfileClick = onEditProfileClick
         )
 
         Spacer(modifier = Modifier.height(16.dp))

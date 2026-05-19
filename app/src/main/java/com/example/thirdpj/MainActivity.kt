@@ -1,6 +1,7 @@
 package com.example.thirdpj
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}", "post_template_detail/{postTemplateId}" )
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}", "post_template_detail/{postTemplateId}" , "profile_edit")
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
 
@@ -225,7 +226,12 @@ class MainActivity : ComponentActivity() {
                                                 },
                                                 onError = { }
                                             )
-                                        }
+                                        },
+                                        onEditProfileClick =  {
+                                            Log.d("PROFILE_EDIT", "프로필 수정 버튼 클릭됨")
+                                            // 이거 안했더니 프로필 수정 페이지로 안넘어가짐
+                                            profileViewModel.resetState()
+                                            navController.navigate("profile_edit") }
                                     )
 
                             )
@@ -286,6 +292,18 @@ class MainActivity : ComponentActivity() {
                         composable("search") {
                             SearchScreen(
                                 onCardClick = { id -> navController.navigate("post_template_detail/$id") }
+                            )
+                        }
+
+
+                        composable("profile_edit") {
+                            val currentProfile = profileViewModel.profile.collectAsStateWithLifecycle().value
+                            Log.d("PROFILE_EDIT", "currentProfile: $currentProfile")
+                            ProfileScreen(
+                                viewModel = profileViewModel,
+                                initialProfile = currentProfile,
+                                onSuccess = { navController.popBackStack() },
+                                onBackClick = { navController.popBackStack() }
                             )
                         }
 
