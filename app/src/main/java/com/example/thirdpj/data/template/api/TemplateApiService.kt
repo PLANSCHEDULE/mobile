@@ -5,10 +5,13 @@ import com.example.thirdpj.data.post.dto.PostTemplateDto
 import com.example.thirdpj.data.post.dto.SliceResponse
 import com.example.thirdpj.data.template.dto.TemplateCreateRequest
 import com.example.thirdpj.data.template.dto.TemplateResponse
+import com.example.thirdpj.data.template.dto.TemplateUpdateRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -34,4 +37,21 @@ interface TemplateApiService {
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 10
     ): Response<ApiResponse<SliceResponse<TemplateResponse>>>
+
+    @GET("api/templates/{templateId}")
+    suspend fun getTemplateDetail(
+        @Path("templateId") templateId: Long
+    ): Response<ApiResponse<TemplateResponse>>
+
+    @PUT("api/templates/{templateId}")
+    suspend fun updateTemplate(
+        @Path("templateId") templateId: Long,
+        @Body request: TemplateUpdateRequest
+    ): Response<ApiResponse<TemplateResponse>>
+
+
+    @DELETE("api/templates/{templateId}")
+    suspend fun deleteTemplate(
+        @Path("templateId") templateId: Long
+    ): Response<ApiResponse<Unit>>
 }

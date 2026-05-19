@@ -72,14 +72,8 @@ fun ProfileScreen(
                     if (isEditMode) {
                         // 수정 모드
                         // 임시 데이터
-                        onActionClick(
-                            ProfileResponse(
-                                userId = initialProfile!!.userId,
-                                handle = handle,
-                                nickname = nickname,
-                                bio = bio
-                            )
-                        )
+                        viewModel.updateProfile(nickname, bio)
+
                     } else {
                         // 생성모드일 때, 서버에 직접 데이터 전송 요청
                         viewModel.createProfile(handle, nickname, bio)

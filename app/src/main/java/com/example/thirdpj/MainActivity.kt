@@ -1,9 +1,11 @@
 package com.example.thirdpj
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -33,15 +35,22 @@ import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.login.LoginViewModel
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.auth.signup.SignUpViewModel
+import com.example.thirdpj.ui.detail.screens.PostTemplateDetailScreen
 import com.example.thirdpj.ui.favorite.screens.FavoriteScreen
 import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.global.components.MainAddButton
 import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.home.screens.HomeViewModel
+import com.example.thirdpj.ui.mypage.MyPageViewModel
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
+import com.example.thirdpj.ui.plan.detail.TemplateDetailViewModel
+import com.example.thirdpj.ui.plan.detail.screen.TemplateDetailScreen
+import com.example.thirdpj.ui.plan.edit.EditPlanViewModel
+import com.example.thirdpj.ui.plan.edit.screens.EditPlanScreen
 import com.example.thirdpj.ui.profile.screens.ProfileScreen
 import com.example.thirdpj.ui.profile.screens.ProfileViewModel
+import com.example.thirdpj.ui.search.screens.SearchScreen
 import com.example.thirdpj.ui.testdata.TemplateItemData
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import com.example.thirdpj.util.TokenManager
@@ -78,11 +87,16 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view")
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}", "post_template_detail/{postTemplateId}" , "profile_edit")
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
 
                 val homeViewModel: HomeViewModel = viewModel { HomeViewModel() }
+
+                val myPageViewModel: MyPageViewModel = viewModel {
+                    MyPageViewModel(tokenManager)
+                }
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     // 현재의 경로가 숨김 리스트에 없을 때만 하단바 보여주기
@@ -164,19 +178,29 @@ class MainActivity : ComponentActivity() {
                                 viewModel = homeViewModel,
                                 onBrowseClick = {
                                     navController.navigate("top10_view")
+                                },
+                                onCardClick = {
+                                    id -> navController.navigate("post_template_detail/$id")
+                                },
+                                onSearchClick = {
+                                    navController.navigate("search")
                                 }
+
                             )
                         }
 
                        composable("favorite"){
-                           FavoriteScreen()
+                           FavoriteScreen(
+                               onCardClick = { id -> navController.navigate("post_template_detail/$id") }
+                           )
                        }
 
                         composable("top10_view") {
 
                             TemplateAllViewScreen(
                                 title = "이번주 BEST TOP 10",
-                                onBackClick = { navController.popBackStack() }
+                                onBackClick = { navController.popBackStack() },
+                                onCardClick = {id -> navController.navigate("post_template_detail/$id")}
                             )
 
                         }
@@ -190,7 +214,26 @@ class MainActivity : ComponentActivity() {
                                     MyPageScreen(
                                         navController = navController,
                                         viewModel = profileViewModel,
-                                        onHeartClick = {navController.navigate("favorite")})
+                                        myPageViewModel = myPageViewModel,
+                                        onHeartClick = {navController.navigate("favorite")},
+                                        onTemplateClick = { id -> navController.navigate("template_detail/$id") },
+                                        onLogoutClick = {
+                                            myPageViewModel.logout(
+                                                onSuccess = {
+                                                    navController.navigate("login") {
+                                                        popUpTo(0) { inclusive = true }
+                                                    }
+                                                },
+                                                onError = { }
+                                            )
+                                        },
+                                        onEditProfileClick =  {
+                                            Log.d("PROFILE_EDIT", "프로필 수정 버튼 클릭됨")
+                                            // 이거 안했더니 프로필 수정 페이지로 안넘어가짐
+                                            profileViewModel.resetState()
+                                            navController.navigate("profile_edit") }
+                                    )
+
                             )
                         }
 
@@ -202,6 +245,72 @@ class MainActivity : ComponentActivity() {
 
                             )
                         }
+
+                        composable("template_detail/{templateId}") { backStackEntry ->
+                            val templateId = backStackEntry.arguments?.getString("templateId")?.toLong() ?: return@composable
+                            TemplateDetailScreen(
+                                templateId = templateId,
+                                onBackClick = { navController.popBackStack() },
+                                onEditClick = { id -> navController.navigate("template_edit/$id") }
+                            )
+                        }
+
+
+                        composable("template_edit/{templateId}") { backStackEntry ->
+                            val templateId = backStackEntry.arguments?.getString("templateId")?.toLong()
+                                ?: return@composable
+
+                            //  수정 화면에서 다시 상세 조회해서 초기화
+                            val editViewModel: EditPlanViewModel = viewModel()
+                            val detailViewModel: TemplateDetailViewModel = viewModel()
+                            val template by detailViewModel.template.collectAsStateWithLifecycle()
+
+                            LaunchedEffect(templateId) {
+                                detailViewModel.fetchTemplateDetail(templateId)
+                            }
+
+                            LaunchedEffect(template) {
+                                template?.let { editViewModel.initWithTemplate(it) }
+                            }
+
+                            EditPlanScreen(
+                                templateId = templateId,
+                                initialTemplate = template ?: return@composable,
+                                onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable("post_template_detail/{postTemplateId}") { backStackEntry ->
+                            val postTemplateId = backStackEntry.arguments?.getString("postTemplateId")?.toLong()
+                                ?: return@composable
+                            PostTemplateDetailScreen(
+                                postTemplateId = postTemplateId,
+                                onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable("search") {
+                            SearchScreen(
+                                onCardClick = { id -> navController.navigate("post_template_detail/$id") }
+                            )
+                        }
+
+
+                        composable("profile_edit") {
+                            val currentProfile = profileViewModel.profile.collectAsStateWithLifecycle().value
+                            Log.d("PROFILE_EDIT", "currentProfile: $currentProfile")
+                            ProfileScreen(
+                                viewModel = profileViewModel,
+                                initialProfile = currentProfile,
+                                onSuccess = { navController.popBackStack() },
+                                onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
+
+
+
+
 
                     }
 

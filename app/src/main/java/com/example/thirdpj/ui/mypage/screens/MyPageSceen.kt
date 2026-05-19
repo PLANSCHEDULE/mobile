@@ -32,7 +32,11 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun MyPageScreen(navController: NavController,
                  viewModel: ProfileViewModel,
                  myPageViewModel: MyPageViewModel = viewModel(),
-                 onHeartClick: () -> Unit = {}) {
+                 onHeartClick: () -> Unit = {},
+                 onTemplateClick:(Long) -> Unit = {},
+                 onLogoutClick: () -> Unit = {},
+                 onEditProfileClick: () -> Unit = {}
+) {
 
     val profile by viewModel.profile.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -58,7 +62,9 @@ fun MyPageScreen(navController: NavController,
         ProfileHeaderScreen(
             nickname = profile?.nickname ?: "",
             handle = profile?.handle ?: "",
-            bio = profile?.bio ?: ""
+            bio = profile?.bio ?: "",
+            onLogoutClick = onLogoutClick,
+            onEditProfileClick = onEditProfileClick
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -73,7 +79,8 @@ fun MyPageScreen(navController: NavController,
             title = "내 템플릿",
             count = myTemplates.size.toString(),
             countColor = Color(0xFFFF5252),
-            templates = myTemplates
+            templates = myTemplates,
+            onCardClick = { id -> onTemplateClick(id) }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -82,7 +89,8 @@ fun MyPageScreen(navController: NavController,
             title = "포크한 템플릿",
             count = downloadedTemplates.size.toString(),
             countColor = Color(0xFF4A90E2),
-            templates = downloadedTemplates
+            templates = downloadedTemplates,
+            onCardClick = { id -> onTemplateClick(id) }
         )
 
         Spacer(modifier = Modifier.height(30.dp))
