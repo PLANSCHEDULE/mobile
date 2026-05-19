@@ -28,7 +28,7 @@ fun BottomBar(navController: NavController) {
 
 
     NavigationBar(
-        containerColor = Color.White,
+        containerColor = Color(0xFFF5F3FF),
         tonalElevation = 8.dp
     ) {
         // 홈
@@ -44,8 +44,9 @@ fun BottomBar(navController: NavController) {
                     restoreState = false
                 }
             },
-            icon = { Icon(Icons.Default.Home, contentDescription = "홈") },
-            label = { Text("HOME") }
+            icon = { Icon(Icons.Default.Home, contentDescription = "홈",
+                tint = if (currentRoute == "home") Color(0xFF534AB7) else Color(0xFFAFA9EC)) },
+            label = { Text("HOME", color = if (currentRoute == "home") Color(0xFF534AB7) else Color(0xFFAFA9EC)) }
         )
 
         // 탐색
@@ -61,8 +62,9 @@ fun BottomBar(navController: NavController) {
                     restoreState = false
                 }
             },
-            icon = {Icon(Icons.Default.Search, contentDescription = "검색")},
-            label = {Text("탐색")}
+            icon = { Icon(Icons.Default.Search, contentDescription = "검색",
+                tint = if (currentRoute == "search") Color(0xFF534AB7) else Color(0xFFAFA9EC)) },
+            label = { Text("탐색", color = if (currentRoute == "search") Color(0xFF534AB7) else Color(0xFFAFA9EC)) }
         )
 
         // 찜
@@ -79,8 +81,9 @@ fun BottomBar(navController: NavController) {
                 }
 
             },
-            icon = {Icon(Icons.Default.Favorite, contentDescription = "찜 목록")},
-            label = {Text("찜")}
+            icon = { Icon(Icons.Default.Favorite, contentDescription = "찜 목록",
+                tint = if (currentRoute == "favorite") Color(0xFF534AB7) else Color(0xFFAFA9EC)) },
+            label = { Text("찜", color = if (currentRoute == "favorite") Color(0xFF534AB7) else Color(0xFFAFA9EC)) }
         )
 
         NavigationBarItem(
@@ -95,11 +98,11 @@ fun BottomBar(navController: NavController) {
                     // 이전걸 복원하려해서 홈에서 찜이 false로 날아오는데 true로 표시하는 경우가 생김
                 }
             },
-            icon = {Icon(Icons.Default.Person, contentDescription = "마이페이지")},
-            label = {Text("마이페이지")}
+            icon = { Icon(Icons.Default.Person, contentDescription = "마이페이지",
+                tint = if (currentRoute == "mypage") Color(0xFF534AB7) else Color(0xFFAFA9EC)) },
+            label = { Text("마이페이지",
+                color = if (currentRoute == "mypage") Color(0xFF534AB7) else Color(0xFFAFA9EC)) }
         )
-
-
 
     }
 }

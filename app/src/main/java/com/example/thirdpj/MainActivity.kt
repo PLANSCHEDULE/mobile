@@ -101,18 +101,14 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
 
                         if(currentRoute in showFabScreens) {
-                            Box(
-                                modifier = Modifier.offset(y =24.dp)
-                            ) {
-                                MainAddButton ( onClick = {
-                                    navController.navigate("create_plan") {
-                                        launchSingleTop = true
-                                    }
-                                })
-                            }
+                            MainAddButton ( onClick = {
+                                navController.navigate("create_plan") {
+                                    launchSingleTop = true
+                                }
+                            })
                         }
                     },
-                    floatingActionButtonPosition = FabPosition.Center
+                    floatingActionButtonPosition = FabPosition.End
 
 
 
