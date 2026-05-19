@@ -23,6 +23,7 @@ import com.example.thirdpj.ui.favorite.FavoriteViewModel
 
 @Composable
 fun FavoriteScreen(
+    onCardClick: (Long) -> Unit = {},
     viewModel: FavoriteViewModel = viewModel(),
 ) {
     val templates by viewModel.templates.collectAsStateWithLifecycle()
@@ -61,6 +62,7 @@ fun FavoriteScreen(
             TemplateGrid(
                 modifier = Modifier.padding(innerPadding),
                 templates = templates,
+                onCardClick = onCardClick,
                 onDownloadClick = { id -> viewModel.downloadTemplate(id) },
                 onFavoriteClick = { id -> viewModel.toggleFavorite(id) }
             )

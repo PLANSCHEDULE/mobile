@@ -82,6 +82,21 @@ class PostTemplateRepository(private val apiService: PostTemplateApiService) {
         }
     }
 
+    suspend fun getPostTemplateDetail(postTemplateId: Long): Result<PostTemplateDto> {
+        return try {
+            val response = apiService.getPostTemplateDetail(postTemplateId)
+            if (response.isSuccessful) {
+                val data = response.body()?.data
+                    ?: return Result.failure(Exception("응답 데이터가 없습니다."))
+                Result.success(data)
+            } else {
+                Result.failure(Exception("상세 조회 실패 코드: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 
 
 

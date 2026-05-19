@@ -33,6 +33,7 @@ import com.example.thirdpj.ui.auth.login.LoginScreen
 import com.example.thirdpj.ui.auth.login.LoginViewModel
 import com.example.thirdpj.ui.auth.signup.SignUpScreen
 import com.example.thirdpj.ui.auth.signup.SignUpViewModel
+import com.example.thirdpj.ui.detail.screens.PostTemplateDetailScreen
 import com.example.thirdpj.ui.favorite.screens.FavoriteScreen
 import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.global.components.MainAddButton
@@ -82,7 +83,7 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}" )
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}", "post_template_detail/{postTemplateId}" )
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
 
@@ -168,19 +169,26 @@ class MainActivity : ComponentActivity() {
                                 viewModel = homeViewModel,
                                 onBrowseClick = {
                                     navController.navigate("top10_view")
+                                },
+                                onCardClick = {
+                                    id -> navController.navigate("post_template_detail/$id")
                                 }
+
                             )
                         }
 
                        composable("favorite"){
-                           FavoriteScreen()
+                           FavoriteScreen(
+                               onCardClick = { id -> navController.navigate("post_template_detail/$id") }
+                           )
                        }
 
                         composable("top10_view") {
 
                             TemplateAllViewScreen(
                                 title = "이번주 BEST TOP 10",
-                                onBackClick = { navController.popBackStack() }
+                                onBackClick = { navController.popBackStack() },
+                                onCardClick = {id -> navController.navigate("post_template_detail/$id")}
                             )
 
                         }
@@ -243,6 +251,17 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = { navController.popBackStack() }
                             )
                         }
+
+                        composable("post_template_detail/{postTemplateId}") { backStackEntry ->
+                            val postTemplateId = backStackEntry.arguments?.getString("postTemplateId")?.toLong()
+                                ?: return@composable
+                            PostTemplateDetailScreen(
+                                postTemplateId = postTemplateId,
+                                onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
+
 
                     }
 

@@ -1,6 +1,7 @@
 package com.example.thirdpj.ui.home.screens
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 @Composable
 fun HomeScreen(
     onBrowseClick: () -> Unit = {},
+    onCardClick: (Long) -> Unit = {},
     viewModel: HomeViewModel = viewModel{ HomeViewModel() }
 ) {
     val templates by viewModel.templates.collectAsStateWithLifecycle()
@@ -90,7 +92,9 @@ fun HomeScreen(
                 }
                 PostTemplateCard(
                     template = templates[index],
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable{onCardClick(templates[index].postTemplateId)},
                     onDownloadClick = { id -> viewModel.downloadTemplate(id) },
                     onFavoriteClick = { id -> viewModel.toggleFavorite(id) }
                 )
