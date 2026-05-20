@@ -98,7 +98,7 @@ fun TemplateDetailScreen(
                             .padding(vertical = 24.dp)
                     ) {
                         Text(
-                            text = template!!.title,
+                            text = template?.title ?: "",
                             style = MaterialTheme.typography.headlineMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF534AB7)
@@ -119,7 +119,7 @@ fun TemplateDetailScreen(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = template!!.targetDate,
+                                text = template?.targetDate ?: "",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color(0xFF534AB7)
                             )
@@ -129,7 +129,7 @@ fun TemplateDetailScreen(
 
                 // 아이템 목록
                 items(
-                    template!!.items.sortedBy { it.sequence },
+                    template?.items?.sortedBy { it.sequence } ?: emptyList(),
                     key = { it.id }
                 ) { item ->
                     DetailPlanItem(

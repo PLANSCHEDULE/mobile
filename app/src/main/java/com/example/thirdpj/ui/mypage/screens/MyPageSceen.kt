@@ -80,7 +80,8 @@ fun MyPageScreen(navController: NavController,
             count = myTemplates.size.toString(),
             countColor = Color(0xFF534AB7),
             templates = myTemplates,
-            onCardClick = { id -> onTemplateClick(id) }
+            onCardClick = { id -> onTemplateClick(id) },
+            onViewAllClick = { navController.navigate("my_template_all_view/my") }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -90,7 +91,8 @@ fun MyPageScreen(navController: NavController,
             count = downloadedTemplates.size.toString(),
             countColor = Color(0xFF7F77DD),
             templates = downloadedTemplates,
-            onCardClick = { id -> onTemplateClick(id) }
+            onCardClick = { id -> onTemplateClick(id) },
+            onViewAllClick = { navController.navigate("my_template_all_view/downloaded") }
         )
 
         Spacer(modifier = Modifier.height(30.dp))

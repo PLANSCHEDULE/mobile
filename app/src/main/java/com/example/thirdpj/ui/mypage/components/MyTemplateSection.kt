@@ -69,9 +69,7 @@ fun MyTemplateSection(
                 text = "전체보기 >",
                 fontSize = 13.sp,
                 color = Color(0xFF7F77DD),
-                modifier = Modifier.clickable{
-
-                }
+                modifier = Modifier.clickable { onViewAllClick() }
             )
         }
 

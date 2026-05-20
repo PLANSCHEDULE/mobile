@@ -35,6 +35,7 @@ import com.example.thirdpj.ui.global.components.BottomBar
 import com.example.thirdpj.ui.global.components.MainAddButton
 import com.example.thirdpj.ui.home.screens.HomeScreen
 import com.example.thirdpj.ui.home.screens.HomeViewModel
+import com.example.thirdpj.ui.myallview.screens.MyTemplateAllViewScreen
 import com.example.thirdpj.ui.mypage.MyPageViewModel
 import com.example.thirdpj.ui.mypage.screens.MyPageScreen
 import com.example.thirdpj.ui.plan.create.screens.CreatePlanScreen
@@ -80,7 +81,8 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 // 하단바를 숨길 경로
-                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}", "post_template_detail/{postTemplateId}" , "profile_edit")
+                val hideBottomBarScreens = listOf("login", "signup", "profile_create", "top10_view", "template_detail/{templateId}", "template_edit/{templateId}", "post_template_detail/{postTemplateId}" , "profile_edit",
+                    "my_template_all_view/{type}")
 
                 val showFabScreens = listOf("home", "favorite", "mypage")
 
@@ -298,6 +300,20 @@ class MainActivity : ComponentActivity() {
                                 initialProfile = currentProfile,
                                 onSuccess = { navController.popBackStack() },
                                 onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable("my_template_all_view/{type}") { backStackEntry ->
+                            val type = backStackEntry.arguments?.getString("type") ?: "my"
+                            val templates = if (type == "my") myPageViewModel.myTemplates.collectAsStateWithLifecycle().value
+                            else myPageViewModel.downloadedTemplates.collectAsStateWithLifecycle().value
+                            val title = if (type == "my") "내 템플릿" else "포크한 템플릿"
+
+                            MyTemplateAllViewScreen(
+                                title = title,
+                                templates = templates,
+                                onBackClick = { navController.popBackStack() },
+                                onCardClick = { id -> navController.navigate("template_detail/$id") }
                             )
                         }
 
