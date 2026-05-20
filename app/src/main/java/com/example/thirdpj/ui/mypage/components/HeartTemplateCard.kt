@@ -79,9 +79,9 @@ fun HeartTemplateCard(
                     text = buildAnnotatedString {
                         append("하트 누른 템플릿 ")
                         //오 이렇게 적용하니까 디자인이랑 거의 비슷하게 됨
-                        withStyle(style = SpanStyle(color = Color(0xFF534AB7), fontWeight = FontWeight.Bold)) {
-                            append("32")
-                        }
+//                        withStyle(style = SpanStyle(color = Color(0xFF534AB7), fontWeight = FontWeight.Bold)) {
+//                            append("32")
+//                        }
                     },
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
