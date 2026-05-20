@@ -28,7 +28,8 @@ import com.example.thirdpj.R
 fun DetailPlanTopBar(
     onBackClick: () -> Unit = {},
     onEditClick: () -> Unit = {},
-    onDeleteClick: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onShareClick: () -> Unit = {}
 
 ) {
     TopAppBar(
@@ -46,6 +47,14 @@ fun DetailPlanTopBar(
         actions = {
             TextButton(onClick = onEditClick) {
                 Text("수정", color = Color(0xFF534AB7), fontWeight = FontWeight.Bold)
+            }
+            Button(
+                onClick = onShareClick,
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD)),
+                shape = RoundedCornerShape(12.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                Text("공유", fontSize = 14.sp)
             }
             Spacer(modifier = Modifier.width(4.dp))
             Button(

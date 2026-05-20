@@ -56,6 +56,19 @@ fun TemplateDetailScreen(
             DetailPlanTopBar(
                 onBackClick = onBackClick,
                 onEditClick = { template?.let { onEditClick(it.id) } },
+                onShareClick = {  // ✅ 추가
+                    template?.let {
+                        viewModel.shareTemplate(
+                            templateId = it.id,
+                            onSuccess = {
+                                Toast.makeText(context, "공유되었습니다!", Toast.LENGTH_SHORT).show()
+                            },
+                            onError = { msg ->
+                                Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                            }
+                        )
+                    }
+                },
                 onDeleteClick = {
                     template?.let {
                         viewModel.deleteTemplate(
@@ -71,6 +84,7 @@ fun TemplateDetailScreen(
                     }
 
                 }
+
             )
         },
         containerColor = Color(0xFFF5F3FF)

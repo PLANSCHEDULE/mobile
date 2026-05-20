@@ -32,4 +32,12 @@ class TemplateDetailViewModel : ViewModel() {
         }
     }
 
+    fun shareTemplate(templateId: Long, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            repository.shareTemplate(templateId)
+                .onSuccess { onSuccess() }
+                .onFailure { onError(it.message ?: "공유 중 오류가 발생했습니다.") }
+        }
+    }
+
 }
