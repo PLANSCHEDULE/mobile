@@ -20,13 +20,13 @@ fun PostTemplateDetailTopBar(
     onBackClick: () -> Unit = {}
 ) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFF5F3FF)),
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_back),
                     contentDescription = "뒤로가기",
-                    tint = Color.Black
+                    tint = Color(0xFF534AB7)
                 )
             }
         },
@@ -35,7 +35,7 @@ fun PostTemplateDetailTopBar(
                 text = "일정 상세보기",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = Color.Black
+                color = Color(0xFF534AB7)
             )
         }
     )

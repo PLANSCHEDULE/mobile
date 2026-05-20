@@ -30,7 +30,7 @@ fun PostTemplateItemRow(
         Text(
             text = itemTime,
             fontSize = 14.sp,
-            color = Color(0xFFEF7F61),
+            color = Color(0xFF7F77DD),
             fontWeight = FontWeight.Bold,
             modifier = Modifier.width(50.dp)
         )
@@ -38,14 +38,15 @@ fun PostTemplateItemRow(
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
-            color = Color(0xFFF9F9F9),
+            color = Color(0xFFEEECFB),
             shadowElevation = 1.dp
         ) {
             Text(
                 text = content,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(12.dp),
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF534AB7)
             )
         }
     }

@@ -63,14 +63,14 @@ fun PostTemplateDetailScreen(
                 )
             }
         },
-        containerColor = Color.White
+        containerColor = Color(0xFFF5F3FF)
     ) { innerPadding ->
         if (template == null) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = Color(0xFFEF7F61))
+                CircularProgressIndicator(color = Color(0xFF7F77DD))
             }
         } else {
             val t = template!!
