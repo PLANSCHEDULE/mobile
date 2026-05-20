@@ -81,7 +81,8 @@ fun EditPlanScreen(
                             Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                         }
                     )
-                }
+                },
+                showShareButton = false
             )
         },
         containerColor = Color(0xFFF5F3FF)

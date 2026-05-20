@@ -34,7 +34,8 @@ import com.example.thirdpj.ui.theme.ThirdPJTheme
 fun CreatePlanTopBar(
     onBackClick: () -> Unit = {},
     onSaveClick: () -> Unit = {},
-    onShareClick: () -> Unit = {}
+    onShareClick: () -> Unit = {},
+    showShareButton: Boolean = true
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -71,21 +72,24 @@ fun CreatePlanTopBar(
             Spacer(modifier = Modifier.width(4.dp))
 
             // 공유 버튼
-            Button(
-                onClick = onShareClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD)),
-                shape = RoundedCornerShape(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.share),
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp)
+            if(showShareButton) {
+                Button(
+                    onClick = onShareClick,
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD)),
+                    shape = RoundedCornerShape(12.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.share),
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp)
                     )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text("공유", fontSize = 14.sp)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("공유", fontSize = 14.sp)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
             }
-            Spacer(modifier = Modifier.width(8.dp))
+
         }
 
     )
