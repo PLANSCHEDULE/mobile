@@ -1,7 +1,6 @@
 package com.example.thirdpj.data.api
 
 import android.content.Context
-import com.example.thirdpj.data.api.AuthService
 import com.example.thirdpj.data.post.api.PostTemplateApiService
 import com.example.thirdpj.data.profile.api.ProfileService
 import com.example.thirdpj.data.template.api.TemplateApiService
@@ -9,14 +8,13 @@ import com.example.thirdpj.util.TokenManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
+import com.example.thirdpj.BuildConfig
 
 // 통신을 담당하는 역할
 object RetrofitClient {
     // retrofit은 baseurl에 / 붙이는 걸 권장.
     // 그럼 authservice단에 api주소도 / 빼야되는건가 -> 빼야됨
-    private const val BASE_URL = "http://10.0.2.2:8080/"
-
+    private const val BASE_URL = BuildConfig.BASE_URL
     private var tokenManager: TokenManager? = null
     private lateinit var retrofit: Retrofit
 
