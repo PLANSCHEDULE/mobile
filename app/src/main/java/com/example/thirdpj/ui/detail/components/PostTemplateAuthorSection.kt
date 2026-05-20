@@ -58,7 +58,7 @@ fun PostTemplateAuthorSection(
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = authorHandle,
+                text = if (authorHandle.startsWith("@")) authorHandle else "@$authorHandle",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF534AB7)

@@ -73,7 +73,7 @@ fun TemplateDetailScreen(
                 }
             )
         },
-        containerColor = Color(0xFFFFFBF5)
+        containerColor = Color(0xFFF5F3FF)
     ) { innerPadding ->
         if (template == null) {
             Box(
