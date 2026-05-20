@@ -57,7 +57,7 @@ class CreatePlanViewModel(
 
                 val requestBody = TemplateCreateRequest(
                     title = templateTitle,
-                    background = "DEFAULT_BG",
+                    background = "",
                     targetDate = LocalDate.now().format(dateFormatter),
                     items = itemDtos
                 )

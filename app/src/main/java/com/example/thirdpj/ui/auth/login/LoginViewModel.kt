@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thirdpj.data.auth.dto.LoginRequest
 import com.example.thirdpj.data.auth.dto.LoginResponse
+import com.example.thirdpj.data.model.ErrorResponse
+
 import com.example.thirdpj.data.repository.AuthRepository
 import com.example.thirdpj.util.TokenManager
 import com.example.thirdpj.util.UiState
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -46,13 +49,25 @@ class LoginViewModel(private val repository: AuthRepository,
                         _loginState.value = UiState.Error(body?.message ?: "로그인 실패")
                     }
                 } else {
-                    _loginState.value = UiState.Error("서버 에러: ${response.code()}")
+                    val errorMessage = try {
+                        val errorBody = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorResponse = gson.fromJson(errorBody, ErrorResponse::class.java)
+                        errorResponse?.message ?: "로그인 실패"
+                    } catch (e: Exception) {
+                        "서버 에러: ${response.code()}"
+                    }
+                    _loginState.value = UiState.Error(errorMessage)
                 }
             } catch (e: Exception) {
                 _loginState.value = UiState.Error("네트워크 오류가 발생했습니다.")
             }
         }
 
+    }
+
+    fun resetState() {
+        _loginState.value = UiState.Idle
     }
 
 

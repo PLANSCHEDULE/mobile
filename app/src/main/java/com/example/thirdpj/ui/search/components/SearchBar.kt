@@ -30,7 +30,7 @@ fun SearchBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(Color(0xFFF5F3FF))
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -39,14 +39,14 @@ fun SearchBar(
             onValueChange = onKeywordChange,
             modifier = Modifier.weight(1f),
             placeholder = {
-                Text(text = "템플릿 제목으로 검색", color = Color.LightGray)
+                Text(text = "템플릿 제목으로 검색", color = Color(0xFFAFA9EC))
             },
             singleLine = true,
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFEF7F61),
-                unfocusedBorderColor = Color(0xFFE5E5E5),
-                cursorColor = Color(0xFFEF7F61)
+                focusedBorderColor = Color(0xFF7F77DD),
+                unfocusedBorderColor = Color(0xFFCECBF6),
+                cursorColor = Color(0xFF7F77DD)
             ),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = { onSearch() }),
@@ -55,7 +55,7 @@ fun SearchBar(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "검색",
-                        tint = Color(0xFFEF7F61)
+                        tint = Color(0xFF7F77DD)
                     )
                 }
             }

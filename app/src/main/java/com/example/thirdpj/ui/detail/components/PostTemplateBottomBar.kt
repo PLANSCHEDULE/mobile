@@ -31,7 +31,7 @@ fun PostTemplateBottomBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(Color(0xFFF5F3FF))
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -39,14 +39,14 @@ fun PostTemplateBottomBar(
             Icon(
                 imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = "찜",
-                tint = if (isFavorite) Color(0xFFFF6B6B) else Color.Gray
+                tint = if (isFavorite) Color(0xFFFF6B6B) else Color(0xFFAFA9EC)
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
         Button(
             onClick = onForkClick,
             modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEF7F61)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD)),
             shape = RoundedCornerShape(12.dp)
         ) {
             Text("🍴 내 일정으로 포크하기", fontWeight = FontWeight.Bold)

@@ -46,7 +46,7 @@ fun ProfileHeaderScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Gray)
+                .background(Color(0xFF534AB7))
                 .padding(horizontal = 24.dp)
         ) {
             Row(
@@ -59,7 +59,7 @@ fun ProfileHeaderScreen(
                 }) {
                     Text(
                         text = "프로필 수정",
-                        color = Color.White.copy(alpha = 0.8f),
+                        color = Color(0xFFCECBF6),
                         fontSize = 12.sp
                     )
                 }
@@ -69,7 +69,7 @@ fun ProfileHeaderScreen(
                 ) {
                     Text(
                         text = "로그아웃",
-                        color = Color.White.copy(alpha = 0.8f),
+                        color = Color(0xFFCECBF6),
                         fontSize = 12.sp
                     )
                 }
@@ -84,7 +84,7 @@ fun ProfileHeaderScreen(
                     modifier = Modifier
                         .size(80.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
+                        .background(Color(0xFFAFA9EC))
                         .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
@@ -92,12 +92,12 @@ fun ProfileHeaderScreen(
                         text = nickname.take(1),
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFFFF8E5E)
+                        color = Color.White
                     )
 
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(25.dp))
 
                 // 이름
                 Row(

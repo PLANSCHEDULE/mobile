@@ -14,7 +14,7 @@ class TemplateRepository(private val templateService: TemplateApiService) {
             if (response.isSuccessful) {
                 val data = response.body()?.data
                     ?: return Result.failure(Exception("응답 데이터가 없습니다."))
-                Result.success(data)  // ✅ TemplateResponse 반환
+                Result.success(data)
             } else {
                 Result.failure(Exception("템플릿 생성 실패 코드: ${response.code()}"))
             }

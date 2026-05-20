@@ -1,4 +1,4 @@
-package com.example.thirdpj.data.model.GlobalDto
+package com.example.thirdpj.data.model.globaldto
 
 // 서버 공통응답 대응 dto
 data class ApiResponse<T>(

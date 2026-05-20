@@ -1,12 +1,12 @@
 package com.example.thirdpj.ui.global.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,12 +37,19 @@ fun MyTemplateCard(
     val displayItems = template.items.sortedBy { it.sequence }.take(2)
     val remainCount = template.items.size - 2
     val hasMore = remainCount > 0
+
+    Log.d("TEMPLATE_CARD", "title: ${template.title}")
+    Log.d("TEMPLATE_CARD", "background: ${template.background}")
+    template.items.forEach { item ->
+        Log.d("TEMPLATE_CARD", "itemTime: ${item.itemTime}, content: ${item.content}")
+    }
     Card(
         modifier = modifier
             .width(160.dp)
             .clickable{onClick()},
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Box(
             modifier = Modifier
@@ -50,7 +57,11 @@ fun MyTemplateCard(
                 .height(100.dp)
                 .background(
                     try {
-                        Color(template.background.toColorInt())
+                        if (template.background.isNotBlank()) {
+                            Color(template.background.toColorInt())
+                        } else {
+                            Color(0xFFFFB380)
+                        }
                     } catch (e: Exception) {
                         Color(0xFFFFB380)
                     }

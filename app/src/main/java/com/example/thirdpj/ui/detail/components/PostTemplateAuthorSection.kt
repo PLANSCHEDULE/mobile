@@ -45,7 +45,7 @@ fun PostTemplateAuthorSection(
             Surface(
                 modifier = Modifier.size(40.dp),
                 shape = CircleShape,
-                color = Color(0xFFB39DDB)
+                color = Color(0xFFAFA9EC)
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
@@ -58,9 +58,10 @@ fun PostTemplateAuthorSection(
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = authorHandle,
+                text = if (authorHandle.startsWith("@")) authorHandle else "@$authorHandle",
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF534AB7)
             )
         }
 
@@ -81,17 +82,17 @@ fun PostTemplateAuthorSection(
                     modifier = Modifier.size(24.dp)
                 )
                 Text(text = favoriteCount.toString(), fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = "하트", fontSize = 12.sp, color = Color.Gray)
+                Text(text = "하트", fontSize = 12.sp, color = Color(0xFFAFA9EC))
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painter = painterResource(id = R.drawable.download),
                     contentDescription = null,
-                    tint = Color.Gray,
+                    tint = Color(0xFFAFA9EC),
                     modifier = Modifier.size(24.dp)
                 )
                 Text(text = downloadCount.toString(), fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = "다운로드", fontSize = 12.sp, color = Color.Gray)
+                Text(text = "다운로드", fontSize = 12.sp, color = Color(0xFFAFA9EC))
             }
         }
 
@@ -99,7 +100,7 @@ fun PostTemplateAuthorSection(
         HorizontalDivider(thickness = 0.5.dp)
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "일정 미리보기", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(text = "일정 미리보기", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFF534AB7))
         Spacer(modifier = Modifier.height(8.dp))
     }
 }

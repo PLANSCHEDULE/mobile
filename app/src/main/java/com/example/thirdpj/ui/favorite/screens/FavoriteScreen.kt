@@ -38,14 +38,14 @@ fun FavoriteScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFFF9F5F0)
+        containerColor = Color(0xFFF5F3FF)
     ) { innerPadding ->
         if (isLoading && templates.isEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = Color(0xFFEF7F61))
+                CircularProgressIndicator(color = Color(0xFF7F77DD))
             }
         } else if (templates.isEmpty()) {
             Box(
@@ -54,7 +54,7 @@ fun FavoriteScreen(
             ) {
                 Text(
                     text = "찜한 템플릿이 없습니다.",
-                    color = Color.Gray,
+                    color = Color(0xFFAFA9EC),
                     fontSize = 14.sp
                 )
             }

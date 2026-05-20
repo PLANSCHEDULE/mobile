@@ -55,7 +55,7 @@ fun CreatePlanHeader(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color(0xFFFFFBF5))
+            .background(Color(0xFFF5F3FF))
             .padding(horizontal = 20.dp, vertical = 24.dp)
     ) {
         // 상태 표시
@@ -66,7 +66,7 @@ fun CreatePlanHeader(
             Text(
                 text = "새로운 일정 작성",
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.Gray
+                color = Color(0xFF7F77DD)
             )
         }
 
@@ -77,14 +77,17 @@ fun CreatePlanHeader(
             value = title,
             onValueChange = onTitleChange,
             // 아래서 발생한 제목을 입력하세요와 커서 입력 차이를 textStyle로 지정해주면 해결됨!
-            textStyle = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+            textStyle = MaterialTheme.typography.headlineMedium.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF534AB7)
+            ),
             decorationBox = {innerTextField ->
                 // 제목이 없는지 확인한 후에 제목 입력하세요 띄우기
                 if(title.isEmpty()) {
                     Text(
                         text = "제목을 입력하세요",
                         style = MaterialTheme.typography.headlineMedium,
-                        color = Color.LightGray
+                        color = Color(0xFFCECBF6)
                     )
                     // 제목을 입력하세요는 큰데 커서는 또 작음.. textStyle 지정으로 해결
                 }
@@ -100,7 +103,7 @@ fun CreatePlanHeader(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .background(Color(0xFFF8F0E5), RoundedCornerShape(8.dp))
+                .background(Color(0xFFEEECFB), RoundedCornerShape(8.dp))
                 .padding(horizontal = 12.dp, vertical = 4.dp)
 
         ) {
@@ -108,13 +111,13 @@ fun CreatePlanHeader(
                 imageVector = Icons.Default.DateRange,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp),
-                tint = Color(0xFFF27A54)
+                tint = Color(0xFF7F77DD)
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = today,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Black
+                color = Color(0xFF534AB7)
             )
         }
 

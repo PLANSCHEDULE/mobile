@@ -81,9 +81,12 @@ fun EditPlanScreen(
                             Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                         }
                     )
-                }
+                },
+                showShareButton = false
             )
-        }
+        },
+        containerColor = Color(0xFFF5F3FF)
+
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -166,7 +169,7 @@ fun EditPlanScreen(
                             if (idx != -1) planItems[idx] = planItems[idx].copy(time = newTime)
                             showBottomSheet = false
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF27A54)),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD)),
                         modifier = Modifier.fillMaxWidth(0.5f)
                     ) {
                         Text("선택 완료", fontWeight = FontWeight.Bold)

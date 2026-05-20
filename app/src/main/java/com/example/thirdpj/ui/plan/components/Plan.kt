@@ -59,7 +59,7 @@ fun Plan(item: PlanItem,
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         color = Color.White,
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         shadowElevation = 2.dp
     ) {
         Row(
@@ -101,7 +101,7 @@ fun Plan(item: PlanItem,
             // 시간
             Surface(
                 onClick = onTimeClick,
-                color = Color(0xFFFFF7F0),
+                color = Color(0xFFEEECFB),
                 shape = RoundedCornerShape(4.dp)
             ) {
                 // 시간 선택을 어떻게 하면 좋을까, 선택? 시간 선택 컴포넌트를 따로 만들어야 하는 듯
@@ -109,7 +109,7 @@ fun Plan(item: PlanItem,
                     text = item.time.format(timeFormatter),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if(item.isDone) Color.LightGray else Color(0xFFF27A54)
+                        color = if(item.isDone) Color.LightGray else Color(0xFF7F77DD)
                     ),
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
                 )
@@ -123,7 +123,7 @@ fun Plan(item: PlanItem,
                 checked = item.isDone,
                 onCheckedChange = onCheckedChange,
                 enabled = true,
-                colors = CheckboxDefaults.colors(checkedColor = Color(0xFFF27A54))
+                colors = CheckboxDefaults.colors(checkedColor = Color(0xFF7F77DD))
             )
 
             Spacer(modifier = Modifier.width(4.dp))
@@ -150,10 +150,10 @@ fun Plan(item: PlanItem,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,
-                    focusedBorderColor = Color(0xFFF27A54),    // 클릭해서 수정 중일 때 주황색 틀
-                    unfocusedBorderColor = Color(0xFFE5E5E5),  // 평소에 보이는 연한 회색 틀
-                    disabledBorderColor = Color(0xFFE5E5E5),
-                    cursorColor = Color(0xFFF27A54)
+                    focusedBorderColor = Color(0xFF7F77DD),
+                    unfocusedBorderColor = Color(0xFFCECBF6),
+                    disabledBorderColor = Color(0xFFCECBF6),
+                    cursorColor = Color(0xFF7F77DD)
                 ),
                 singleLine = true
             )

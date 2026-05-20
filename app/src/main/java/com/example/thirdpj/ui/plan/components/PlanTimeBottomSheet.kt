@@ -66,8 +66,8 @@ fun PlanTimeBottomSheet(
                 state = timePickerState,
                 colors = TimePickerDefaults.colors(
                     // 선택 시에 색상 선택 가능
-                    selectorColor = Color(0xFFF27A54),
-                    periodSelectorSelectedContentColor = Color(0xFFFFF7F0)
+                    selectorColor = Color(0xFF7F77DD),
+                    periodSelectorSelectedContentColor = Color(0xFFF5F3FF)
                 )
             )
 
@@ -84,7 +84,7 @@ fun PlanTimeBottomSheet(
                     .fillMaxWidth(0.85f)
                     .height(54.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF27A54))
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7F77DD))
             ) {
                 Text("시간 적용하기", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }

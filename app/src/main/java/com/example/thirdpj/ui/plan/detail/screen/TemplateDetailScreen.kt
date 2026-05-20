@@ -56,6 +56,19 @@ fun TemplateDetailScreen(
             DetailPlanTopBar(
                 onBackClick = onBackClick,
                 onEditClick = { template?.let { onEditClick(it.id) } },
+                onShareClick = {  // ✅ 추가
+                    template?.let {
+                        viewModel.shareTemplate(
+                            templateId = it.id,
+                            onSuccess = {
+                                Toast.makeText(context, "공유되었습니다!", Toast.LENGTH_SHORT).show()
+                            },
+                            onError = { msg ->
+                                Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                            }
+                        )
+                    }
+                },
                 onDeleteClick = {
                     template?.let {
                         viewModel.deleteTemplate(
@@ -71,16 +84,17 @@ fun TemplateDetailScreen(
                     }
 
                 }
+
             )
         },
-        containerColor = Color(0xFFFFFBF5)
+        containerColor = Color(0xFFF5F3FF)
     ) { innerPadding ->
         if (template == null) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = Color(0xFFEF7F61))
+                CircularProgressIndicator(color = Color(0xFF7F77DD))
             }
         } else {
             LazyColumn(
@@ -94,32 +108,34 @@ fun TemplateDetailScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0xFFFFFBF5))
+                            .background(Color(0xFFF5F3FF))
                             .padding(vertical = 24.dp)
                     ) {
                         Text(
-                            text = template!!.title,
+                            text = template?.title ?: "",
                             style = MaterialTheme.typography.headlineMedium.copy(
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF534AB7)
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .background(Color(0xFFF8F0E5), RoundedCornerShape(8.dp))
+                                .background(Color(0xFFEEECFB), RoundedCornerShape(8.dp))
                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.DateRange,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp),
-                                tint = Color(0xFFF27A54)
+                                tint = Color(0xFF7F77DD)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = template!!.targetDate,
-                                style = MaterialTheme.typography.bodyMedium
+                                text = template?.targetDate ?: "",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color(0xFF534AB7)
                             )
                         }
                     }
@@ -127,7 +143,7 @@ fun TemplateDetailScreen(
 
                 // 아이템 목록
                 items(
-                    template!!.items.sortedBy { it.sequence },
+                    template?.items?.sortedBy { it.sequence } ?: emptyList(),
                     key = { it.id }
                 ) { item ->
                     DetailPlanItem(

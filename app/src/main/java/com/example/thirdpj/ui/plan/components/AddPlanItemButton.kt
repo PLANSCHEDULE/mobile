@@ -37,7 +37,7 @@ fun AddPlanItemButton(
             .padding(vertical = 12.dp),
         color = Color.Transparent,
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Color(0xFFE5E5E5))
+        border = BorderStroke(1.dp, Color(0xFFCECBF6))
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -47,7 +47,7 @@ fun AddPlanItemButton(
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "추가",
-                tint = Color(0xFFF27A54),
+                tint = Color(0xFF7F77DD),
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -55,7 +55,7 @@ fun AddPlanItemButton(
                 text = "새 항목 추가하기",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = Color(0xFF7F77DD)
                 )
             )
         }

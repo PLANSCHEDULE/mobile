@@ -106,32 +106,42 @@ fun CreatePlanScreen(
 
 
 
-                )
-        }
+            )
+        },
+        containerColor = Color(0xFFF5F3FF)
 
     ) {innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .imePadding()
+
 
         ) {
             // 헤더 고정 안됨 -> header을 lazycolumn안에 둬서 고정이 되지 않았음
-            CreatePlanHeader(
-                title = viewModel.templateTitle,
-                onTitleChange = {viewModel.onTitleChange(it)}
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
+//            CreatePlanHeader(
+//                title = viewModel.templateTitle,
+//                onTitleChange = {viewModel.onTitleChange(it)}
+//            )
+//
+//            Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn(
                 state = lazyListState,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
+//                    .fillMaxSize()
+                    .weight(1f)
+                    .imePadding()
             ) {
                 // 헤더 영역
+                item {
+                    CreatePlanHeader(
+                        title = viewModel.templateTitle,
+                        onTitleChange = {viewModel.onTitleChange(it)}
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
 
 
                 // 일정 리스트 영역
@@ -171,7 +181,7 @@ fun CreatePlanScreen(
                         onMoveDown = {
                             planItems.move(index, index + 1)
                         },
-                        modifier = Modifier
+                        modifier = Modifier.padding(horizontal = 20.dp)
                     )
                 }
 
@@ -189,7 +199,8 @@ fun CreatePlanScreen(
                             }
 
 
-                        }
+                        },
+                        modifier = Modifier.padding(horizontal = 20.dp)
                     )
                 }
 

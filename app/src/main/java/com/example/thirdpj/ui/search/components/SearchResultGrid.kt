@@ -59,7 +59,7 @@ fun SearchResultGrid(
                         .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = Color(0xFFEF7F61))
+                    CircularProgressIndicator(color = Color(0xFF7F77DD))
                 }
             }
         }

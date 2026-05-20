@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,7 +85,8 @@ fun ProfileScreen(
                 showBackButton = isEditMode
 
             )
-        }
+        },
+        containerColor = Color(0xFFF5F3FF)
     ) {innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding)
