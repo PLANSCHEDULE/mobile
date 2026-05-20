@@ -62,7 +62,8 @@ fun PostTemplateCard(
         modifier = modifier
             .padding(4.dp),
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
 
 
     ) {
@@ -213,7 +214,7 @@ fun PostTemplateCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFF5F3FF))
+                .background(Color(0xFFEEECFB))
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
