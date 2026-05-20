@@ -13,6 +13,9 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,6 +51,7 @@ import com.example.thirdpj.ui.profile.screens.ProfileViewModel
 import com.example.thirdpj.ui.search.screens.SearchScreen
 import com.example.thirdpj.ui.theme.ThirdPJTheme
 import com.example.thirdpj.util.TokenManager
+import kotlinx.coroutines.flow.first
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +96,18 @@ class MainActivity : ComponentActivity() {
                     MyPageViewModel(tokenManager)
                 }
 
+                // 자동로그인
+                val startDestination = remember { mutableStateOf("login") }
+                var isReady by remember { mutableStateOf(false) }
+
+                LaunchedEffect(Unit) {
+                    val token = tokenManager.getAccessToken().first()
+                    startDestination.value = if (!token.isNullOrEmpty()) "home" else "login"
+                    isReady = true
+                }
+
+                if (!isReady) return@ThirdPJTheme
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     // 현재의 경로가 숨김 리스트에 없을 때만 하단바 보여주기
@@ -117,7 +133,7 @@ class MainActivity : ComponentActivity() {
                 ) {innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "login",
+                        startDestination = startDestination.value,
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         // 로그인 화면 등록
